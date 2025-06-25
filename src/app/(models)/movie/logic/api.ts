@@ -1,46 +1,61 @@
 import type { MovieListResponse } from '@/app/(models)/movie/types/movie';
 
-const TMDB_API_BASE_URL = 'https://api.themoviedb.org/3';
-const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
+if (!process.env.NEXT_PUBLIC_TMDB_API_BASE_URL) {
+  throw new Error('TMDB_API_BASE_URL environment variable is not set');
+}
+if (!process.env.NEXT_PUBLIC_TMDB_API_ACCESS_TOKEN) {
+  throw new Error('TMDB_API_ACCESS_TOKEN environment variable is not set');
+}
+if (!process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL) {
+  throw new Error('TMDB_IMAGE_BASE_URL environment variable is not set');
+}
 
-export const tmdbApi = {
-  getPopularMovies: async (page = 1): Promise<MovieListResponse> => {
-    const response = await fetch(`${TMDB_API_BASE_URL}/movie/popular?page=${page}`, {
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_KEY}`,
-        'Content-Type': 'application/json',
-      },
-    });
+export const getMovies = async (page: number = 1): Promise<MovieListResponse> => {
+  const url = `${process.env.NEXT_PUBLIC_TMDB_API_BASE_URL}/movie/popular?page=${page}`;
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_ACCESS_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+  });
 
-    if (!response.ok) {
-      throw new Error(`TMDB API error: ${response.status}`);
-    }
+  if (!response.ok) {
+    throw new Error(`TMDB API error: ${response.status}`);
+  }
 
-    return response.json();
-  },
+  return response.json();
+};
 
-  searchMovies: async (query: string, page = 1): Promise<MovieListResponse> => {
-    const response = await fetch(
-      `${TMDB_API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}&page=${page}`,
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_KEY}`,
-          'Content-Type': 'application/json',
-        },
-      },
-    );
+export const searchMovies = async ({
+  query,
+  page,
+}: {
+  query: string;
+  page: number;
+}): Promise<MovieListResponse> => {
+  const url = `${process.env.NEXT_PUBLIC_TMDB_API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}&page=${page}`;
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_ACCESS_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+  });
 
-    if (!response.ok) {
-      throw new Error(`TMDB API error: ${response.status}`);
-    }
+  if (!response.ok) {
+    throw new Error(`TMDB API error: ${response.status}`);
+  }
 
-    return response.json();
-  },
+  return response.json();
+};
 
-  getImageUrl: (path: string | null, size: 'w200' | 'w500' | 'original' = 'w500'): string => {
-    if (!path) {
-      return '/placeholder-movie.png'; // You'll need to add this placeholder image
-    }
-    return `${TMDB_IMAGE_BASE_URL}/${size}${path}`;
-  },
+export const getImageUrl = ({
+  path,
+  size,
+}: {
+  path: string | null;
+  size: 'w200' | 'w500' | 'original';
+}): string => {
+  return !path
+    ? '/placeholder-movie.png'
+    : `${process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL}/${size}${path}`;
 };

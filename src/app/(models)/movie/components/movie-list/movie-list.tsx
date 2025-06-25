@@ -2,7 +2,7 @@ import { MovieCard } from './movie-card';
 
 import type { Movie } from '@/app/(models)/movie/types/movie';
 
-import styles from './index.module.css';
+import styles from './movie-list.module.css';
 
 type Props = {
   movies: Movie[];
@@ -24,7 +24,7 @@ export const MovieList = ({ movies, isLoading, error }: Props) => {
   }
 
   return (
-    <div className={styles.movieList}>
+    <div className={styles.base}>
       {movies.map((movie) => (
         <MovieCard key={movie.id} movie={movie} />
       ))}

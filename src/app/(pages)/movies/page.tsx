@@ -3,16 +3,16 @@
 import { useState } from 'react';
 
 import { MovieList } from '@/app/(models)/movie/components/movie-list';
-import { useGetPopularMovies, useSearchMovies } from '@/app/(models)/movie/hooks/useGetMovies';
+import { useGetMovies } from '@/app/(models)/movie/hooks/use-get-movies';
+import { useSearchMovies } from '@/app/(models)/movie/hooks/use-search-movies';
 
 import styles from './page.module.css';
 
-// TODO: do not use React Hooks
 const Page = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
 
-  const popularMovies = useGetPopularMovies();
+  const movies = useGetMovies();
   const searchResults = useSearchMovies(searchQuery);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -23,7 +23,7 @@ const Page = () => {
     setIsSearching(!!query);
   };
 
-  const moviesData = isSearching ? searchResults : popularMovies;
+  const moviesData = isSearching ? searchResults : movies;
 
   return (
     <main className={styles.base}>

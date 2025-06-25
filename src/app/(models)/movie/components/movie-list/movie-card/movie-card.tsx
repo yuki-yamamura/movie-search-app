@@ -1,21 +1,21 @@
 import Image from 'next/image';
 
-import { tmdbApi } from '@/app/(models)/movie/logic/api';
+import { getImageUrl } from '@/app/(models)/movie/logic/api';
 
 import type { Movie } from '@/app/(models)/movie/types/movie';
 
-import styles from './index.module.css';
+import styles from './movie-card.module.css';
 
 type Props = {
   movie: Movie;
 };
 
 export const MovieCard = ({ movie }: Props) => {
-  const imageUrl = tmdbApi.getImageUrl(movie.poster_path, 'w500');
+  const imageUrl = getImageUrl({ path: movie.poster_path, size: 'w500' });
   const releaseYear = movie.release_date ? new Date(movie.release_date).getFullYear() : 'N/A';
 
   return (
-    <article className={styles.movieCard}>
+    <article className={styles.base}>
       <div className={styles.imageWrapper}>
         {movie.poster_path ? (
           <Image

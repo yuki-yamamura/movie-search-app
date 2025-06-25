@@ -22,10 +22,10 @@ export const metadata: Metadata = {
 
 type Props = PropsWithChildren;
 
-const RootLayout = ({ children }: Props) => (
-  <html lang="en">
+const Layout = ({ children }: Props) => (
+  <html>
     <body className={`${geistSans.variable} ${geistMono.variable}`}>{children}</body>
   </html>
 );
 
-export default RootLayout;
+export default Layout;

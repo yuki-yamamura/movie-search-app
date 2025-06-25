@@ -1,11 +1,4 @@
-.movieList {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--spacing-lg);
-  padding: var(--spacing-lg);
-}
-
-.movieCard {
+.base {
   overflow: hidden;
   background: var(--background-secondary);
   border: 1px solid var(--border-color);
@@ -13,11 +6,11 @@
   transition:
     transform var(--transition-base),
     box-shadow var(--transition-base);
-}
 
-.movieCard:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
 }
 
 .imageWrapper {
@@ -74,23 +67,9 @@
   display: -webkit-box;
   overflow: hidden;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
   color: var(--text-secondary);
   -webkit-box-orient: vertical;
-}
-
-.loading,
-.error,
-.empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 200px;
-  font-size: var(--text-lg);
-  color: var(--text-secondary);
-}
-
-.error {
-  color: var(--color-error);
 }

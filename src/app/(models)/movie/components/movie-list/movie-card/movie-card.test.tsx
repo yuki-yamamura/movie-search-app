@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { MovieCard } from './movie-card';
+import { MovieCard } from '../movie-card';
 
 import type { Movie } from '@/app/(models)/movie/types/movie';
 

@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import styles from './page.module.css';
 
-const Home = () => (
+const Page = () => (
   <div className={styles.base}>
     <main className={styles.main}>
       <h1 className={styles.title}>Movie Search App</h1>
@@ -19,4 +19,4 @@ const Home = () => (
   </div>
 );
 
-export default Home;
+export default Page;
