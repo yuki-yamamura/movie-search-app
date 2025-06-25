@@ -1,0 +1,38 @@
+import useSWR from 'swr';
+
+import { getMovies } from '@/app/(models)/movie/logic/api';
+
+import type { MovieListResponse } from '@/app/(models)/movie/types/movie';
+
+export const useGetMovies = (
+  page = 1,
+): {
+  movies: MovieListResponse['results'];
+  totalPages: MovieListResponse['total_pages'];
+  totalResults: MovieListResponse['total_results'];
+  currentPage: MovieListResponse['page'];
+  isLoading: boolean;
+  isError: boolean;
+  error: Error | undefined;
+  mutate: () => void;
+} => {
+  const { data, error, isLoading, mutate } = useSWR<MovieListResponse>(
+    [`/movie/popular`, page],
+    () => getMovies(page),
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
+  );
+
+  return {
+    movies: data?.results ?? [],
+    totalPages: data?.total_pages ?? 0,
+    totalResults: data?.total_results ?? 0,
+    currentPage: data?.page ?? page,
+    isLoading,
+    isError: !!error,
+    error,
+    mutate,
+  };
+};

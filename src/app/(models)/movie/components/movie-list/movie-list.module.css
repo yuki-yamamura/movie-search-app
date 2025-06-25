@@ -1,0 +1,28 @@
+.base {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+}
+
+.loading,
+.error,
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  font-size: var(--text-lg);
+}
+
+.loading {
+  color: var(--text-secondary);
+}
+
+.empty {
+  color: var(--text-tertiary);
+}
+
+.error {
+  color: var(--color-error);
+}
