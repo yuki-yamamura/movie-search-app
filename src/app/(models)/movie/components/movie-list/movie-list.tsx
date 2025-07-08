@@ -1,3 +1,5 @@
+import { LoadMoreButton } from '@/app/(models)/movie/components/load-more-button';
+
 import { MovieCard } from './movie-card';
 
 import type { MovieListResponse } from '@/types/generated/movie-types';
@@ -8,14 +10,27 @@ type Props = {
   movies: MovieListResponse['results'];
   isLoading?: boolean;
   error?: Error;
+  onLoadMore?: () => void;
+  isLoadingMore?: boolean;
+  hasMorePages?: boolean;
+  totalResults?: number;
 };
 
-export const MovieList = ({ movies, isLoading, error }: Props) => {
-  if (isLoading) {
+export const MovieList = ({ 
+  movies, 
+  isLoading, 
+  error, 
+  onLoadMore,
+  isLoadingMore = false,
+  hasMorePages = false,
+  totalResults = 0
+}: Props) => {
+  // Show loading only for initial load (not for Load More)
+  if (isLoading && (!movies || movies.length === 0)) {
     return <div className={styles.loading}>Loading movies...</div>;
   }
 
-  if (error) {
+  if (error && (!movies || movies.length === 0)) {
     return <div className={styles.error}>Error loading movies: {error.message}</div>;
   }
 
@@ -24,10 +39,21 @@ export const MovieList = ({ movies, isLoading, error }: Props) => {
   }
 
   return (
-    <div className={styles.base}>
-      {movies.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} />
-      ))}
+    <div className={styles.container}>
+      <div className={styles.base}>
+        {movies.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
+      </div>
+      {onLoadMore && (
+        <LoadMoreButton
+          onLoadMore={onLoadMore}
+          isLoading={isLoadingMore}
+          hasMorePages={hasMorePages}
+          totalResults={totalResults}
+          currentCount={movies.length}
+        />
+      )}
     </div>
   );
 };
