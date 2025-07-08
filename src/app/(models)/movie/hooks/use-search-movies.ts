@@ -2,22 +2,22 @@ import useSWR from 'swr';
 
 import { searchMovies } from '@/app/(models)/movie/logic/api';
 
-import type { MovieListResponse } from '@/app/(models)/movie/types/movie';
+import type { SearchMovieResponse } from '@/types/generated/movie-types';
 
 export const useSearchMovies = (
   query: string,
   page = 1,
 ): {
-  movies: MovieListResponse['results'];
-  totalPages: MovieListResponse['total_pages'];
-  totalResults: MovieListResponse['total_results'];
-  currentPage: MovieListResponse['page'];
+  movies: SearchMovieResponse['results'];
+  totalPages: SearchMovieResponse['total_pages'];
+  totalResults: SearchMovieResponse['total_results'];
+  currentPage: SearchMovieResponse['page'];
   isLoading: boolean;
   isError: boolean;
   error: Error | undefined;
   mutate: () => void;
 } => {
-  const { data, error, isLoading, mutate } = useSWR<MovieListResponse>(
+  const { data, error, isLoading, mutate } = useSWR<SearchMovieResponse>(
     query ? [`/search/movie`, query, page] : null,
     () => searchMovies({ query, page }),
     {
