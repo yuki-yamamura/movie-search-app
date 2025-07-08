@@ -19,8 +19,8 @@
 .searchForm {
   display: flex;
   gap: var(--spacing-md);
-  max-width: 800px;
   align-items: center;
+  max-width: 800px;
 }
 
 .searchInput {

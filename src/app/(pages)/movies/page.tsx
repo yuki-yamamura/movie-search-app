@@ -1,75 +1,47 @@
-'use client';
-
-import { useQueryStates } from 'nuqs';
 import { Suspense } from 'react';
 
-import { FilterStatus } from '@/app/(models)/movie/components/filter-status';
-import { MovieList } from '@/app/(models)/movie/components/movie-list';
-import { ReleaseYearFilter } from '@/app/(models)/movie/components/release-year-filter';
-import { useDiscoverMovies } from '@/app/(models)/movie/hooks/use-discover-movies';
-import { searchParamsSchema } from '@/app/(models)/movie/schemas/search-params';
+import { AVAILABLE_YEARS } from '@/app/(models)/movie/constants/years';
+import { discoverMovies } from '@/app/(models)/movie/logic/api';
 
-import styles from './page.module.css';
+import { ClientPage } from './client-page';
 
-const MoviesContent = () => {
-  const [{ search, releaseYear }, setSearchParams] = useQueryStates(searchParamsSchema);
-
-  const moviesData = useDiscoverMovies({
-    query: search || undefined,
-    year: releaseYear ? parseInt(releaseYear) : undefined,
-  });
-
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const query = formData.get('search') as string;
-    setSearchParams({ search: query || null });
-  };
-
-  const hasFilters = search || releaseYear;
-  const isSearching = !!search;
-
-  return (
-    <main className={styles.base}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>Movies</h1>
-        <form onSubmit={handleSearch} className={styles.searchForm}>
-          <input
-            type="text"
-            name="search"
-            placeholder="Search movies..."
-            className={styles.searchInput}
-            defaultValue={search || ''}
-          />
-          <button type="submit" className={styles.searchButton}>
-            Search
-          </button>
-          <ReleaseYearFilter />
-        </form>
-      </div>
-
-      <section className={styles.results}>
-        <FilterStatus />
-        <h2 className={styles.sectionTitle}>
-          {isSearching ? `Search Results for "${search}"` : hasFilters ? 'Filtered Movies' : 'Popular Movies'}
-        </h2>
-        {moviesData.totalResults > 0 && (
-          <p className={styles.resultCount}>Found {moviesData.totalResults} movies</p>
-        )}
-        <MovieList
-          movies={moviesData.movies}
-          isLoading={moviesData.isLoading}
-          error={moviesData.error}
-        />
-      </section>
-    </main>
-  );
+type Props = {
+  searchParams: Promise<{
+    search?: string;
+    releaseYear?: string;
+    page?: string;
+  }>;
 };
 
-const Page = () => {
+const Page = async ({ searchParams }: Props) => {
+  const params = await searchParams;
+  const search = params.search || '';
+  const releaseYear = params.releaseYear || '';
+  const pageParam = params.page || '1';
+  
+  // Validate release year is in available years
+  const validReleaseYear = releaseYear && AVAILABLE_YEARS.map(String).includes(releaseYear) 
+    ? releaseYear 
+    : '';
+
+  // Validate and parse page number
+  const page = Math.max(1, parseInt(pageParam) || 1);
+
+  // Fetch initial data server-side (always page 1 for initial load)
+  const initialData = await discoverMovies({
+    query: search || undefined,
+    year: validReleaseYear ? parseInt(validReleaseYear) : undefined,
+    page: 1,
+  });
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <MoviesContent />
+      <ClientPage 
+        initialData={initialData}
+        initialSearch={search}
+        initialReleaseYear={validReleaseYear}
+        initialPage={page}
+      />
     </Suspense>
   );
 };
