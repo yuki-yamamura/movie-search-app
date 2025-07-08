@@ -11,7 +11,7 @@ if (!process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL) {
 }
 
 export const getMovies = async (page: number = 1): Promise<MovieListResponse> => {
-  const url = `${process.env.NEXT_PUBLIC_TMDB_API_BASE_URL}/movie/popular?page=${page}`;
+  const url = `${process.env.NEXT_PUBLIC_TMDB_API_BASE_URL}/3/movie/popular?page=${page}`;
   const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_ACCESS_TOKEN}`,
@@ -33,7 +33,7 @@ export const searchMovies = async ({
   query: string;
   page: number;
 }): Promise<MovieListResponse> => {
-  const url = `${process.env.NEXT_PUBLIC_TMDB_API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}&page=${page}`;
+  const url = `${process.env.NEXT_PUBLIC_TMDB_API_BASE_URL}/3/search/movie?query=${encodeURIComponent(query)}&page=${page}`;
   const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_ACCESS_TOKEN}`,
