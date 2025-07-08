@@ -8,7 +8,7 @@ export const useSearchMovies = (
   query: string,
   page = 1,
 ): {
-  movies: SearchMovieResponse['results'];
+  movies: NonNullable<SearchMovieResponse['results']>;
   totalPages: SearchMovieResponse['total_pages'];
   totalResults: SearchMovieResponse['total_results'];
   currentPage: SearchMovieResponse['page'];

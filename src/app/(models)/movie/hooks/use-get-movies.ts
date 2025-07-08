@@ -7,7 +7,7 @@ import type { PopularMovieResponse } from '@/types/generated/movie-types';
 export const useGetMovies = (
   page = 1,
 ): {
-  movies: PopularMovieResponse['results'];
+  movies: NonNullable<PopularMovieResponse['results']>;
   totalPages: PopularMovieResponse['total_pages'];
   totalResults: PopularMovieResponse['total_results'];
   currentPage: PopularMovieResponse['page'];
