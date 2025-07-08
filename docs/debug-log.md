@@ -28,6 +28,39 @@
 
 ---
 
+### Next.js 15 Server Component TypeScript Errors
+
+#### Issue: "Type 'Props' does not satisfy the constraint 'PageProps'"
+**Date**: 2025-07-08  
+**Context**: Converting client component to server component in Next.js 15  
+**Error Message**: `Types of property 'searchParams' are incompatible. Type '{ search?: string | undefined; releaseYear?: string | undefined; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]`
+
+**Root Cause**: Next.js 15 changed `searchParams` from synchronous object to Promise
+- **Old pattern**: `searchParams: { search?: string }`
+- **New pattern**: `searchParams: Promise<{ search?: string }>`
+
+**Solution**: Update component props and add async/await
+```typescript
+// Props type
+type Props = {
+  searchParams: Promise<{
+    search?: string;
+    releaseYear?: string;
+  }>;
+};
+
+// Component implementation
+const Page = async ({ searchParams }: Props) => {
+  const params = await searchParams;
+  const search = params.search || '';
+  // ... rest of component
+};
+```
+
+**Prevention**: When upgrading to Next.js 15, always check server component prop types and add Promise wrapping where needed
+
+---
+
 ## Debugging Methodology
 
 ### API Integration Issues

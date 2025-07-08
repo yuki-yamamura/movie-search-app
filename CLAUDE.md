@@ -42,11 +42,14 @@ src/app/
 ### Key Patterns
 
 #### Data Fetching
-- Uses SWR for caching and data synchronization
-- Custom hooks (`useGetMovies`, `useSearchMovies`) wrap API calls
-- All API logic centralized in `logic/api.ts`
+- **Hybrid RSC + Client Pattern**: Initial data loads server-side, additional data loads client-side
+- Uses SWR for client-side caching and data synchronization
+- Custom hooks (`useDiscoverMovies`, `useLoadMoreMovies`) wrap API calls with data accumulation
+- All API logic centralized in `logic/api.ts` and works in both server and client environments
 
 #### Component Architecture
+- **Server Components**: Handle initial data fetching and pass props to client components
+- **Client Components**: Manage interactive features (search, filters, pagination)
 - Components are co-located with their styles (`.module.css`)
 - Each component has its own index file for clean imports
 - Components follow a consistent props pattern with loading/error states
@@ -75,7 +78,9 @@ Required environment variables:
 - `src/app/(models)/movie/logic/api.ts` - All TMDB API interactions
 - `src/app/(models)/movie/hooks/` - Data fetching hooks with SWR
 - `src/app/(models)/movie/types/movie.ts` - Core type definitions
-- `src/app/(pages)/movies/page.tsx` - Main movies page with search
+- `src/app/(pages)/movies/page.tsx` - Server component for initial data fetching
+- `src/app/(pages)/movies/client-page.tsx` - Client component for interactivity
+- `src/app/(models)/movie/hooks/use-load-more-movies.ts` - Load More functionality with data accumulation
 - `vitest.config.ts` - Test configuration with path aliases
 
 ## Development Notes
@@ -85,3 +90,5 @@ Required environment variables:
 - SWR is configured to not revalidate on focus/reconnect for better UX
 - TypeScript path aliases are configured (`@/` points to `src/`)
 - Image paths from TMDB API are handled with fallbacks to placeholder images
+- **Load More Pattern**: Uses data accumulation strategy where server provides initial page and client fetches additional pages progressively
+- **Next.js 15**: Server component props use `Promise<searchParams>` pattern requiring async/await
