@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from 'next/font/google';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 import type { Metadata } from 'next';
 import type { PropsWithChildren } from 'react';
@@ -24,7 +25,9 @@ type Props = PropsWithChildren;
 
 const Layout = ({ children }: Props) => (
   <html>
-    <body className={`${geistSans.variable} ${geistMono.variable}`}>{children}</body>
+    <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <NuqsAdapter>{children}</NuqsAdapter>
+    </body>
   </html>
 );
 
