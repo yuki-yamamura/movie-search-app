@@ -1,11 +1,11 @@
 import { MovieCard } from './movie-card';
 
-import type { Movie } from '@/app/(models)/movie/types/movie';
+import type { MovieListResponse } from '@/types/generated/movie-types';
 
 import styles from './movie-list.module.css';
 
 type Props = {
-  movies: Movie[];
+  movies: MovieListResponse['results'];
   isLoading?: boolean;
   error?: Error;
 };
@@ -19,7 +19,7 @@ export const MovieList = ({ movies, isLoading, error }: Props) => {
     return <div className={styles.error}>Error loading movies: {error.message}</div>;
   }
 
-  if (movies.length === 0) {
+  if (!movies || movies.length === 0) {
     return <div className={styles.empty}>No movies found</div>;
   }
 
