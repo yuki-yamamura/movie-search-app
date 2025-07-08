@@ -2,21 +2,21 @@ import useSWR from 'swr';
 
 import { getMovies } from '@/app/(models)/movie/logic/api';
 
-import type { MovieListResponse } from '@/app/(models)/movie/types/movie';
+import type { PopularMovieResponse } from '@/types/generated/movie-types';
 
 export const useGetMovies = (
   page = 1,
 ): {
-  movies: MovieListResponse['results'];
-  totalPages: MovieListResponse['total_pages'];
-  totalResults: MovieListResponse['total_results'];
-  currentPage: MovieListResponse['page'];
+  movies: NonNullable<PopularMovieResponse['results']>;
+  totalPages: PopularMovieResponse['total_pages'];
+  totalResults: PopularMovieResponse['total_results'];
+  currentPage: PopularMovieResponse['page'];
   isLoading: boolean;
   isError: boolean;
   error: Error | undefined;
   mutate: () => void;
 } => {
-  const { data, error, isLoading, mutate } = useSWR<MovieListResponse>(
+  const { data, error, isLoading, mutate } = useSWR<PopularMovieResponse>(
     [`/movie/popular`, page],
     () => getMovies(page),
     {

@@ -44,4 +44,3 @@ next-env.d.ts
 # claude code
 .mcp.json
 .claude/*
-

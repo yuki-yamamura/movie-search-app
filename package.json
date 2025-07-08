@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "generate-types": "openapi-typescript specs/tmdb-api-v3.yaml -o src/types/generated/tmdb-api.d.ts",
+    "dev": "npm run generate-types && next dev",
+    "build": "npm run generate-types && next build",
     "start": "next start",
     "lint:style": "npx stylelint --fix ./src/**/*.css",
     "lint": "next lint &&  npm run lint:style",
@@ -19,6 +20,7 @@
     "dayjs": "^1.11.13",
     "next": "15.3.3",
     "nuqs": "^2.4.3",
+    "openapi-fetch": "^0.14.0",
     "papaparse": "^5.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -38,12 +40,13 @@
     "eslint-config-next": "15.3.3",
     "eslint-plugin-import": "^2.31.0",
     "jsdom": "^26.1.0",
+    "openapi-typescript": "^7.8.0",
     "prettier": "^3.5.3",
     "stylelint": "^16.20.0",
     "stylelint-config-recess-order": "^6.0.0",
     "stylelint-config-standard": "^38.0.0",
     "stylelint-order": "^7.0.0",
-    "typescript": "^5",
+    "typescript": "^5.8.3",
     "vitest": "^3.2.0"
   }
 }

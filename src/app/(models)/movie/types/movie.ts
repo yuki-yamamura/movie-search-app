@@ -1,24 +1,40 @@
-export type Movie = {
-  id: number;
-  title: string;
-  overview: string;
-  poster_path: string | null;
-  backdrop_path: string | null;
-  release_date: string;
-  vote_average: number;
-  vote_count: number;
-  popularity: number;
-  genre_ids: number[];
-};
+/**
+ * Movie type definitions
+ * 
+ * Re-exports from generated OpenAPI types for backward compatibility
+ * and convenience. These types are automatically generated from the
+ * TMDB OpenAPI schema and provide full type safety.
+ * 
+ * @fileoverview Movie types for TMDB API
+ * @deprecated Use types from @/types/generated/movie-types directly
+ */
 
-export type MovieListResponse = {
-  page: number;
-  results: Movie[];
-  total_pages: number;
-  total_results: number;
-};
+// Re-export all types from generated files for backward compatibility
+export type {
+  Movie,
+  MovieListResponse,
+  SearchMovieResponse,
+  PopularMovieResponse,
+  DiscoverMovieResponse,
+  Genre,
+  TMDBError,
+  TMDBApiError
+} from '@/types/generated/movie-types';
 
-export type Genre = {
-  id: number;
-  name: string;
-};
+// Re-export utility functions
+export {
+  hasValidPoster,
+  hasValidBackdrop,
+  isCompleteMovie,
+  hasValidReleaseDate,
+  hasGenres,
+  getMovieYear,
+  formatMovieRating,
+  getSafeMovieTitle,
+  getSafeMovieOverview,
+  filterByMinRating,
+  filterByGenres,
+  sortByPopularity,
+  sortByRating,
+  sortByReleaseDate
+} from '@/types/generated/movie-utils';

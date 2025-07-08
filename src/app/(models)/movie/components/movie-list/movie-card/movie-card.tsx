@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import { getImageUrl } from '@/app/(models)/movie/logic/api';
 
-import type { Movie } from '@/app/(models)/movie/types/movie';
+import type { Movie } from '@/types/generated/movie-types';
 
 import styles from './movie-card.module.css';
 
@@ -20,7 +20,7 @@ export const MovieCard = ({ movie }: Props) => {
         {movie.poster_path ? (
           <Image
             src={imageUrl}
-            alt={movie.title}
+            alt={movie.title || 'Movie poster'}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className={styles.image}
@@ -32,12 +32,12 @@ export const MovieCard = ({ movie }: Props) => {
         )}
       </div>
       <div className={styles.content}>
-        <h3 className={styles.title}>{movie.title}</h3>
+        <h3 className={styles.title}>{movie.title || 'Unknown Title'}</h3>
         <div className={styles.meta}>
           <span className={styles.year}>{releaseYear}</span>
           <span className={styles.rating}>★ {movie.vote_average.toFixed(1)}</span>
         </div>
-        <p className={styles.overview}>{movie.overview}</p>
+        <p className={styles.overview}>{movie.overview || 'No description available'}</p>
       </div>
     </article>
   );

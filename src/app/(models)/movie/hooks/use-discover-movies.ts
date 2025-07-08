@@ -2,7 +2,7 @@ import useSWR from 'swr';
 
 import { discoverMovies } from '@/app/(models)/movie/logic/api';
 
-import type { MovieListResponse } from '@/app/(models)/movie/types/movie';
+import type { SearchMovieResponse, DiscoverMovieResponse } from '@/types/generated/movie-types';
 
 export const useDiscoverMovies = ({
   query,
@@ -13,16 +13,16 @@ export const useDiscoverMovies = ({
   year?: number;
   page?: number;
 } = {}): {
-  movies: MovieListResponse['results'];
-  totalPages: MovieListResponse['total_pages'];
-  totalResults: MovieListResponse['total_results'];
-  currentPage: MovieListResponse['page'];
+  movies: NonNullable<SearchMovieResponse['results'] | DiscoverMovieResponse['results']>;
+  totalPages: SearchMovieResponse['total_pages'] | DiscoverMovieResponse['total_pages'];
+  totalResults: SearchMovieResponse['total_results'] | DiscoverMovieResponse['total_results'];
+  currentPage: SearchMovieResponse['page'] | DiscoverMovieResponse['page'];
   isLoading: boolean;
   isError: boolean;
   error: Error | undefined;
   mutate: () => void;
 } => {
-  const { data, error, isLoading, mutate } = useSWR<MovieListResponse>(
+  const { data, error, isLoading, mutate } = useSWR<SearchMovieResponse | DiscoverMovieResponse>(
     [`/discover/movie`, query, year, page],
     () => discoverMovies({ query, year, page }),
     {
