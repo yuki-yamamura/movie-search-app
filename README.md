@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# movie-search-app
 
-## Getting Started
+[TMDB API](https://developer.themoviedb.org/reference/intro/getting-started)から映画のデータを取得して、映画の検索機能を提するアプリケーション
 
-First, run the development server:
+## Get Started
 
-```bash
+1. TMDB APIのアクセストークンを発行する
+2. リポジトリをクリーンする
+3. `.env.local` にアクセストークンを設定する
+4. 依存ライブラリをインストールする
+5. ローカルサーバーを起動する
+
+```sh
+# 2. リポジトリをクリーンする
+git clone https://github.com/yuki-yamamura/movie-search-app.git
+
+# 3. `.env.local` にアクセストークンを設定する
+cp .env.local.template .env.local
+vim .env.local
+
+# 4. 依存ライブラリをインストールする
+npm install
+
+# 5. ローカルサーバーを起動する
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

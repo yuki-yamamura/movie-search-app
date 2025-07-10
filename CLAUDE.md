@@ -9,16 +9,18 @@ This is a Next.js 15 movie search application that uses The Movie Database (TMDB
 ## Development Commands
 
 ### Essential Commands
-- `npm run dev` - Start development server on localhost:3000
-- `npm run build` - Build production version
+- `npm run dev` - Start development server on localhost:3000 (auto-generates types)
+- `npm run build` - Build production version (auto-generates types)
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint and Stylelint checks
 - `npm run format` - Format code using Prettier
+- `npm run generate-types` - Generate TypeScript types from OpenAPI spec
 
 ### Testing Commands
 - `npm run test` - Run tests with Vitest
 - `npm run test:watch` - Run tests in watch mode
 - `npm run test:ui` - Run tests with UI interface
+- `npx vitest run path/to/file.test.tsx` - Run a single test file
 
 ### Linting Commands
 - `npm run lint:style` - Run Stylelint on CSS files
@@ -46,6 +48,8 @@ src/app/
 - Uses SWR for client-side caching and data synchronization
 - Custom hooks (`useDiscoverMovies`, `useLoadMoreMovies`) wrap API calls with data accumulation
 - All API logic centralized in `logic/api.ts` and works in both server and client environments
+- **Type Safety**: Uses `openapi-fetch` with auto-generated types from TMDB OpenAPI spec (`specs/tmdb-api-v3.yaml`)
+- Types are regenerated automatically during dev/build processes
 
 #### Component Architecture
 - **Server Components**: Handle initial data fetching and pass props to client components
@@ -75,12 +79,14 @@ Required environment variables:
 
 ## Key Files to Understand
 
-- `src/app/(models)/movie/logic/api.ts` - All TMDB API interactions
+- `src/app/(models)/movie/logic/api.ts` - All TMDB API interactions with type-safe client
 - `src/app/(models)/movie/hooks/` - Data fetching hooks with SWR
 - `src/app/(models)/movie/types/movie.ts` - Core type definitions
 - `src/app/(pages)/movies/page.tsx` - Server component for initial data fetching
 - `src/app/(pages)/movies/client-page.tsx` - Client component for interactivity
 - `src/app/(models)/movie/hooks/use-load-more-movies.ts` - Load More functionality with data accumulation
+- `src/types/generated/tmdb-api.d.ts` - Auto-generated API types from OpenAPI spec
+- `specs/tmdb-api-v3.yaml` - OpenAPI specification for TMDB API
 - `vitest.config.ts` - Test configuration with path aliases
 
 ## Development Notes
