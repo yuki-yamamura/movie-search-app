@@ -1,0 +1,6 @@
+.searchForm {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+  max-width: 800px;
+}

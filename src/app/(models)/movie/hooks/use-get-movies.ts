@@ -2,7 +2,7 @@ import useSWR from 'swr';
 
 import { getMovies } from '@/app/(models)/movie/logic/api';
 
-import type { PopularMovieResponse } from '@/types/movie';
+import type { PopularMovieResponse } from '@/app/(models)/movie/types';
 
 export const useGetMovies = (
   page = 1,

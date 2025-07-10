@@ -1,6 +1,6 @@
 import createClient from 'openapi-fetch';
 
-import type { TMDBApiPaths } from '@/types/movie';
+import type { TMDBApiPaths } from '@/app/(models)/movie/types';
 
 if (!process.env.NEXT_PUBLIC_TMDB_API_BASE_URL) {
   throw new Error('TMDB_API_BASE_URL environment variable is not set');

@@ -9,14 +9,14 @@
  * @see https://developer.themoviedb.org/docs for API documentation
  */
 
+import { TMDBError } from '@/app/(models)/movie/types';
 import { tmdbClient } from '@/lib/tmdb';
-import { TMDBError } from '@/types/movie';
 
 import type {
   DiscoverMovieResponse,
   PopularMovieResponse,
   SearchMovieResponse,
-} from '@/types/movie';
+} from '@/app/(models)/movie/types';
 
 // ============================================================================
 // API FUNCTIONS

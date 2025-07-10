@@ -1,9 +1,14 @@
-import { parseAsStringEnum, parseAsString, parseAsInteger } from 'nuqs';
+import { parseAsString, parseAsInteger, parseAsNumberLiteral } from 'nuqs';
 
-import { AVAILABLE_YEARS } from '../constants/years';
+import { START_PAGE_INDEX } from '@/app/(models)/movie/constants';
+import { AVAILABLE_YEARS } from '@/app/(models)/movie/constants/years';
 
-export const searchParamsSchema = {
+import type { inferParserType } from 'nuqs';
+
+export const movieSearchParamsSchema = {
   search: parseAsString,
-  releaseYear: parseAsStringEnum(AVAILABLE_YEARS.map(String)),
-  page: parseAsInteger.withDefault(1),
+  releaseYear: parseAsNumberLiteral(AVAILABLE_YEARS),
+  page: parseAsInteger.withDefault(START_PAGE_INDEX),
 };
+
+export type MovieSearchParams = inferParserType<typeof movieSearchParamsSchema>;

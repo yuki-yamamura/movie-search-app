@@ -2,7 +2,7 @@ import { LoadMoreButton } from '@/app/(models)/movie/components/load-more-button
 
 import { MovieCard } from './movie-card';
 
-import type { MovieListResponse } from '@/types/movie';
+import type { MovieListResponse } from '@/app/(models)/movie/types';
 
 import styles from './movie-list.module.css';
 

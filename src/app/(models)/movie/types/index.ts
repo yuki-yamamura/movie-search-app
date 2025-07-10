@@ -10,7 +10,7 @@
  * @see https://developer.themoviedb.org/docs for API documentation
  */
 
-import type { paths, operations } from './generated/tmdb-api';
+import type { paths, operations } from '../../../../types/generated/tmdb-api';
 
 // ============================================================================
 // MOVIE LIST RESPONSE TYPES

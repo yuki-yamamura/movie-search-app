@@ -1,1 +1,0 @@
-export { ReleaseYearFilter } from './release-year-filter';

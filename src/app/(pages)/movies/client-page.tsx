@@ -3,20 +3,20 @@
 import { useQueryStates } from 'nuqs';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { FilterStatus } from '@/app/(models)/movie/components/filter-status';
+import { FilterStatus } from '@/app/(models)/movie/components/movie-filter/filter-status';
+import { ReleaseYearFilter } from '@/app/(models)/movie/components/movie-filter/release-year-select';
 import { MovieList } from '@/app/(models)/movie/components/movie-list';
-import { ReleaseYearFilter } from '@/app/(models)/movie/components/release-year-filter';
 import { useLoadMoreMovies } from '@/app/(models)/movie/hooks/use-load-more-movies';
-import { searchParamsSchema } from '@/app/(models)/movie/schemas/search-params';
+import { movieSearchParamsSchema } from '@/app/(models)/movie/schemas/search-params';
 
-import type { SearchMovieResponse, DiscoverMovieResponse } from '@/types/movie';
+import type { SearchMovieResponse, DiscoverMovieResponse } from '@/app/(models)/movie/types';
 
 import styles from './page.module.css';
 
 type Props = {
   initialData: SearchMovieResponse | DiscoverMovieResponse;
-  initialSearch: string;
-  initialReleaseYear: string;
+  initialSearch: string | null;
+  initialReleaseYear: string | null;
   initialPage: number;
 };
 
@@ -26,7 +26,7 @@ export const ClientPage = ({
   initialReleaseYear,
   initialPage,
 }: Props) => {
-  const [{ search, releaseYear, page }, setSearchParams] = useQueryStates(searchParamsSchema);
+  const [{ search, releaseYear, page }, setSearchParams] = useQueryStates(movieSearchParamsSchema);
 
   // Use current search params or fallback to initial values
   const currentSearch = search ?? initialSearch;

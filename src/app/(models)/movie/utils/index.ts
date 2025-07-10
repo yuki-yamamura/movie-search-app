@@ -8,7 +8,7 @@
  * @author Generated utilities for OpenAPI types
  */
 
-import type { Movie } from '../types/movie';
+import type { Movie } from '@/app/(models)/movie/types';
 
 // ============================================================================
 // TYPE GUARD FUNCTIONS

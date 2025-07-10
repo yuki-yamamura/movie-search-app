@@ -1,48 +1,57 @@
-import { Suspense } from 'react';
+import { createLoader } from 'nuqs';
 
-import { AVAILABLE_YEARS } from '@/app/(models)/movie/constants/years';
+import { MovieFilter } from '@/app/(models)/movie/components/movie-filter/movie-filter';
+import { MovieList } from '@/app/(models)/movie/components/movie-list';
 import { discoverMovies } from '@/app/(models)/movie/logic/api';
+import { movieSearchParamsSchema } from '@/app/(models)/movie/schemas/search-params';
 
-import { ClientPage } from './client-page';
+import type { SearchParams } from 'nuqs';
+
+import styles from './page.module.css';
 
 type Props = {
-  searchParams: Promise<{
-    search?: string;
-    releaseYear?: string;
-    page?: string;
-  }>;
+  searchParams: Promise<SearchParams>;
 };
 
 const Page = async ({ searchParams }: Props) => {
-  const params = await searchParams;
-  const search = params.search || '';
-  const releaseYear = params.releaseYear || '';
-  const pageParam = params.page || '1';
-  
-  // Validate release year is in available years
-  const validReleaseYear = releaseYear && AVAILABLE_YEARS.map(String).includes(releaseYear) 
-    ? releaseYear 
-    : '';
+  const { search, releaseYear, page } = await createLoader(movieSearchParamsSchema)(searchParams);
 
-  // Validate and parse page number
-  const page = Math.max(1, parseInt(pageParam) || 1);
-
-  // Fetch initial data server-side (always page 1 for initial load)
+  // TODO: remove undefined
   const initialData = await discoverMovies({
     query: search || undefined,
-    year: validReleaseYear ? parseInt(validReleaseYear) : undefined,
-    page: 1,
+    year: releaseYear || undefined,
+    page,
   });
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ClientPage 
-        initialData={initialData}
-        initialSearch={search}
-        initialReleaseYear={validReleaseYear}
-        initialPage={page}
-      />
-    </Suspense>
+    <main className={styles.base}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Movies</h1>
+        <MovieFilter />
+      </div>
+
+      <section className={styles.results}>
+        <h2 className={styles.sectionTitle}>
+          {isSearching
+            ? `Search Results for "${currentSearch}"`
+            : hasFilters
+              ? 'Filtered Movies'
+              : 'Popular Movies'}
+        </h2>
+        {loadMoreData.totalResults > 0 && (
+          <p className={styles.resultCount}>Found {loadMoreData.totalResults} movies</p>
+        )}
+        <MovieList
+          movies={loadMoreData.movies}
+          isLoading={false}
+          error={loadMoreData.error}
+          onLoadMore={handleLoadMore}
+          isLoadingMore={loadMoreData.isLoadingMore}
+          hasMorePages={loadMoreData.hasMorePages}
+          totalResults={loadMoreData.totalResults}
+        />
+      </section>
+    </main>
   );
 };
 

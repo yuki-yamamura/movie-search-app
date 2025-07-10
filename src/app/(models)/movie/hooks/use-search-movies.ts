@@ -2,7 +2,7 @@ import useSWR from 'swr';
 
 import { searchMovies } from '@/app/(models)/movie/logic/api';
 
-import type { SearchMovieResponse } from '@/types/movie';
+import type { SearchMovieResponse } from '@/app/(models)/movie/types';
 
 export const useSearchMovies = (
   query: string,

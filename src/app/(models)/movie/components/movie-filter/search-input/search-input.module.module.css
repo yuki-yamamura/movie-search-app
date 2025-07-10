@@ -1,22 +1,15 @@
-.select {
-  box-sizing: border-box;
-  min-width: 160px;
-  height: calc(var(--text-base) * var(--leading-normal) + var(--spacing-md) * 2 + 2px);
+.base {
+  flex: 1;
   padding: var(--spacing-md);
   font-size: var(--text-base);
   color: var(--text-primary);
-  cursor: pointer;
   background: var(--background);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   transition: border-color var(--transition-fast);
 }
 
-.select:focus {
+.base:focus {
   outline: none;
   border-color: var(--color-primary);
-}
-
-.select:hover {
-  border-color: var(--text-tertiary);
 }

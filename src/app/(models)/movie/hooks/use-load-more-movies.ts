@@ -3,7 +3,7 @@ import useSWR from 'swr';
 
 import { discoverMovies } from '@/app/(models)/movie/logic/api';
 
-import type { Movie, SearchMovieResponse, DiscoverMovieResponse } from '@/types/movie';
+import type { Movie, SearchMovieResponse, DiscoverMovieResponse } from '@/app/(models)/movie/types';
 
 type Props = {
   initialMovies: Movie[];
