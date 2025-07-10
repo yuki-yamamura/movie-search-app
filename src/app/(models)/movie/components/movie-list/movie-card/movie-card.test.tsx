@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import { MovieCard } from '../movie-card';
 
-import type { Movie } from '@/types/generated/movie-types';
+import type { Movie } from '@/types/movie';
 
 const mockMovie: Movie = {
   adult: false,

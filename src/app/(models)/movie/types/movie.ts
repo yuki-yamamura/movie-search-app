@@ -1,10 +1,10 @@
 /**
  * Movie type definitions
- * 
+ *
  * Re-exports from generated OpenAPI types for backward compatibility
  * and convenience. These types are automatically generated from the
  * TMDB OpenAPI schema and provide full type safety.
- * 
+ *
  * @fileoverview Movie types for TMDB API
  * @deprecated Use types from @/types/generated/movie-types directly
  */
@@ -18,8 +18,8 @@ export type {
   DiscoverMovieResponse,
   Genre,
   TMDBError,
-  TMDBApiError
-} from '@/types/generated/movie-types';
+  TMDBApiError,
+} from '@/types/movie';
 
 // Re-export utility functions
 export {
@@ -36,5 +36,5 @@ export {
   filterByGenres,
   sortByPopularity,
   sortByRating,
-  sortByReleaseDate
-} from '@/types/generated/movie-utils';
+  sortByReleaseDate,
+} from '@/utils/movie-utils';

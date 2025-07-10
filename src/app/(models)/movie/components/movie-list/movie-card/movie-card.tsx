@@ -4,7 +4,7 @@ import { getImageUrl } from '@/app/(models)/movie/logic/api';
 
 import { StarRating } from './star-rating';
 
-import type { Movie } from '@/types/generated/movie-types';
+import type { Movie } from '@/types/movie';
 
 import styles from './movie-card.module.css';
 

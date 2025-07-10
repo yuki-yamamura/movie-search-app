@@ -2,7 +2,7 @@ import { LoadMoreButton } from '@/app/(models)/movie/components/load-more-button
 
 import { MovieCard } from './movie-card';
 
-import type { MovieListResponse } from '@/types/generated/movie-types';
+import type { MovieListResponse } from '@/types/movie';
 
 import styles from './movie-list.module.css';
 
@@ -16,14 +16,14 @@ type Props = {
   totalResults?: number;
 };
 
-export const MovieList = ({ 
-  movies, 
-  isLoading, 
-  error, 
+export const MovieList = ({
+  movies,
+  isLoading,
+  error,
   onLoadMore,
   isLoadingMore = false,
   hasMorePages = false,
-  totalResults = 0
+  totalResults = 0,
 }: Props) => {
   // Show loading only for initial load (not for Load More)
   if (isLoading && (!movies || movies.length === 0)) {

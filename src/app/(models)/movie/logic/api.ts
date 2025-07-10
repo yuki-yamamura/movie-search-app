@@ -1,53 +1,22 @@
 /**
  * TMDB API client implementation using openapi-fetch
- * 
+ *
  * This module provides type-safe API client functions for The Movie Database (TMDB) API.
  * All functions use openapi-fetch for automatic type inference and runtime validation.
- * 
+ *
  * @fileoverview TMDB API client with generated types
  * @author Claude Code
  * @see https://developer.themoviedb.org/docs for API documentation
  */
 
-import createClient from 'openapi-fetch';
+import { tmdbClient } from '@/lib/tmdb';
+import { TMDBError } from '@/types/movie';
 
-import { TMDBError } from '@/types/generated/movie-types';
-
-import type { 
-  TMDBApiPaths, 
+import type {
+  DiscoverMovieResponse,
   PopularMovieResponse,
-  SearchMovieResponse, 
-  DiscoverMovieResponse
-} from '@/types/generated/movie-types';
-
-// ============================================================================
-// API CLIENT SETUP
-// ============================================================================
-
-// Validate required environment variables
-if (!process.env.NEXT_PUBLIC_TMDB_API_BASE_URL) {
-  throw new Error('TMDB_API_BASE_URL environment variable is not set');
-}
-if (!process.env.NEXT_PUBLIC_TMDB_API_ACCESS_TOKEN) {
-  throw new Error('TMDB_API_ACCESS_TOKEN environment variable is not set');
-}
-if (!process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL) {
-  throw new Error('TMDB_IMAGE_BASE_URL environment variable is not set');
-}
-
-/**
- * Type-safe TMDB API client
- * 
- * Created using openapi-fetch with auto-generated types from the OpenAPI schema.
- * Provides compile-time type checking and IntelliSense support for all endpoints.
- */
-const client = createClient<TMDBApiPaths>({
-  baseUrl: process.env.NEXT_PUBLIC_TMDB_API_BASE_URL,
-  headers: {
-    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_ACCESS_TOKEN}`,
-    'Content-Type': 'application/json',
-  },
-});
+  SearchMovieResponse,
+} from '@/types/movie';
 
 // ============================================================================
 // API FUNCTIONS
@@ -71,10 +40,10 @@ const client = createClient<TMDBApiPaths>({
  * ```
  */
 export const getMovies = async (page: number = 1): Promise<PopularMovieResponse> => {
-  const { data, error } = await client.GET('/3/movie/popular', {
+  const { data, error } = await tmdbClient.GET('/3/movie/popular', {
     params: {
-      query: { page }
-    }
+      query: { page },
+    },
   });
 
   if (error) {
@@ -106,13 +75,13 @@ export const searchMovies = async ({
   query: string;
   page: number;
 }): Promise<SearchMovieResponse> => {
-  const { data, error } = await client.GET('/3/search/movie', {
+  const { data, error } = await tmdbClient.GET('/3/search/movie', {
     params: {
-      query: { 
-        query, 
-        page 
-      }
-    }
+      query: {
+        query,
+        page,
+      },
+    },
   });
 
   if (error) {
@@ -139,12 +108,12 @@ export const searchMovies = async ({
  * ```typescript
  * // Discover movies from 2023
  * const movies2023 = await discoverMovies({ year: 2023, page: 1 });
- * 
+ *
  * // Search for Batman movies from 2022
- * const batmanMovies = await discoverMovies({ 
- *   query: "Batman", 
- *   year: 2022, 
- *   page: 1 
+ * const batmanMovies = await discoverMovies({
+ *   query: "Batman",
+ *   year: 2022,
+ *   page: 1
  * });
  * ```
  */
@@ -159,14 +128,14 @@ export const discoverMovies = async ({
 } = {}): Promise<SearchMovieResponse | DiscoverMovieResponse> => {
   // If we have a search query, use the search endpoint with year filter
   if (query) {
-    const { data, error } = await client.GET('/3/search/movie', {
+    const { data, error } = await tmdbClient.GET('/3/search/movie', {
       params: {
         query: {
           query,
           page,
-          ...(year && { year: year.toString() })
-        }
-      }
+          ...(year && { year: year.toString() }),
+        },
+      },
     });
 
     if (error) {
@@ -177,14 +146,14 @@ export const discoverMovies = async ({
   }
 
   // Otherwise use discover endpoint for filtering
-  const { data, error } = await client.GET('/3/discover/movie', {
+  const { data, error } = await tmdbClient.GET('/3/discover/movie', {
     params: {
       query: {
         page,
         sort_by: 'popularity.desc',
-        ...(year && { primary_release_year: year })
-      }
-    }
+        ...(year && { primary_release_year: year }),
+      },
+    },
   });
 
   if (error) {

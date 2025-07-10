@@ -3,7 +3,7 @@ import useSWR from 'swr';
 
 import { discoverMovies } from '@/app/(models)/movie/logic/api';
 
-import type { Movie, SearchMovieResponse, DiscoverMovieResponse } from '@/types/generated/movie-types';
+import type { Movie, SearchMovieResponse, DiscoverMovieResponse } from '@/types/movie';
 
 type Props = {
   initialMovies: Movie[];
@@ -28,21 +28,22 @@ export const useLoadMoreMovies = ({
   // SWR for additional pages (page > 1)
   const { data, error } = useSWR<SearchMovieResponse | DiscoverMovieResponse>(
     currentPage > 1 ? ['discover-movies', searchQuery, releaseYear, currentPage] : null,
-    () => discoverMovies({ 
-      query: searchQuery || undefined, 
-      year: releaseYear ? parseInt(releaseYear) : undefined, 
-      page: currentPage 
-    }),
-    { 
-      revalidateOnFocus: false, 
-      revalidateOnReconnect: false 
-    }
+    () =>
+      discoverMovies({
+        query: searchQuery || undefined,
+        year: releaseYear ? parseInt(releaseYear) : undefined,
+        page: currentPage,
+      }),
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
   );
 
   // Accumulate movies when new page data arrives
   useEffect(() => {
     if (data?.results && data.results.length > 0 && currentPage > 1) {
-      setAccumulatedMovies(prev => [...prev, ...(data.results || [])]);
+      setAccumulatedMovies((prev) => [...prev, ...(data.results || [])]);
       setIsLoadingMore(false);
     }
   }, [data, currentPage]);
@@ -70,6 +71,6 @@ export const useLoadMoreMovies = ({
     totalPages,
     currentPage,
     loadMore,
-    error
+    error,
   };
 };

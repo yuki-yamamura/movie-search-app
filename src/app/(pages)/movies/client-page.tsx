@@ -9,7 +9,7 @@ import { ReleaseYearFilter } from '@/app/(models)/movie/components/release-year-
 import { useLoadMoreMovies } from '@/app/(models)/movie/hooks/use-load-more-movies';
 import { searchParamsSchema } from '@/app/(models)/movie/schemas/search-params';
 
-import type { SearchMovieResponse, DiscoverMovieResponse } from '@/types/generated/movie-types';
+import type { SearchMovieResponse, DiscoverMovieResponse } from '@/types/movie';
 
 import styles from './page.module.css';
 
@@ -20,7 +20,12 @@ type Props = {
   initialPage: number;
 };
 
-export const ClientPage = ({ initialData, initialSearch, initialReleaseYear, initialPage }: Props) => {
+export const ClientPage = ({
+  initialData,
+  initialSearch,
+  initialReleaseYear,
+  initialPage,
+}: Props) => {
   const [{ search, releaseYear, page }, setSearchParams] = useQueryStates(searchParamsSchema);
 
   // Use current search params or fallback to initial values
@@ -37,12 +42,9 @@ export const ClientPage = ({ initialData, initialSearch, initialReleaseYear, ini
     totalResults: initialData.total_results ?? 0,
   });
 
-  const debouncedSearch = useDebouncedCallback(
-    (searchValue: string) => {
-      setSearchParams({ search: searchValue || null, page: 1 });
-    },
-    500
-  );
+  const debouncedSearch = useDebouncedCallback((searchValue: string) => {
+    setSearchParams({ search: searchValue || null, page: 1 });
+  }, 500);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -85,7 +87,11 @@ export const ClientPage = ({ initialData, initialSearch, initialReleaseYear, ini
       <section className={styles.results}>
         <FilterStatus />
         <h2 className={styles.sectionTitle}>
-          {isSearching ? `Search Results for "${currentSearch}"` : hasFilters ? 'Filtered Movies' : 'Popular Movies'}
+          {isSearching
+            ? `Search Results for "${currentSearch}"`
+            : hasFilters
+              ? 'Filtered Movies'
+              : 'Popular Movies'}
         </h2>
         {loadMoreData.totalResults > 0 && (
           <p className={styles.resultCount}>Found {loadMoreData.totalResults} movies</p>
