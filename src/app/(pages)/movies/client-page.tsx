@@ -1,6 +1,7 @@
 'use client';
 
 import { useQueryStates } from 'nuqs';
+import { useDebouncedCallback } from 'use-debounce';
 
 import { FilterStatus } from '@/app/(models)/movie/components/filter-status';
 import { MovieList } from '@/app/(models)/movie/components/movie-list';
@@ -36,11 +37,22 @@ export const ClientPage = ({ initialData, initialSearch, initialReleaseYear, ini
     totalResults: initialData.total_results ?? 0,
   });
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const query = formData.get('search') as string;
-    setSearchParams({ search: query || null, page: 1 });
+  const debouncedSearch = useDebouncedCallback(
+    (searchValue: string) => {
+      setSearchParams({ search: searchValue || null, page: 1 });
+    },
+    500
+  );
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    debouncedSearch(value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      debouncedSearch.flush();
+    }
   };
 
   const handleLoadMore = () => {
@@ -56,19 +68,18 @@ export const ClientPage = ({ initialData, initialSearch, initialReleaseYear, ini
     <main className={styles.base}>
       <div className={styles.header}>
         <h1 className={styles.title}>Movies</h1>
-        <form onSubmit={handleSearch} className={styles.searchForm}>
+        <div className={styles.searchForm}>
           <input
             type="text"
             name="search"
             placeholder="Search movies..."
             className={styles.searchInput}
             defaultValue={currentSearch || ''}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
           />
-          <button type="submit" className={styles.searchButton}>
-            Search
-          </button>
           <ReleaseYearFilter />
-        </form>
+        </div>
       </div>
 
       <section className={styles.results}>

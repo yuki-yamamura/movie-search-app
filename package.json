@@ -25,7 +25,8 @@
     "papaparse": "^5.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "swr": "^2.3.3"
+    "swr": "^2.3.3",
+    "use-debounce": "^10.0.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",

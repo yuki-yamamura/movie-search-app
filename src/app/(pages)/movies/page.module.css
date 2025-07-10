@@ -39,21 +39,6 @@
   border-color: var(--color-primary);
 }
 
-.searchButton {
-  padding: var(--spacing-md) var(--spacing-xl);
-  font-size: var(--text-base);
-  font-weight: 500;
-  color: white;
-  cursor: pointer;
-  background: var(--color-primary);
-  border: none;
-  border-radius: var(--radius-md);
-  transition: background-color var(--transition-fast);
-}
-
-.searchButton:hover {
-  background: var(--color-primary-hover);
-}
 
 .results {
   margin-top: var(--spacing-2xl);
