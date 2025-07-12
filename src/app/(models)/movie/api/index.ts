@@ -1,7 +1,7 @@
 import { TMDBError } from '@/app/(models)/movie/types';
 import { tmdbClient } from '@/lib/tmdb';
 
-import type { MovieSearchParams } from '../schemas/search-params';
+import type { MovieSearchParams } from '../schemas/movie-search-params';
 import type { DiscoverMovieResponse } from '@/app/(models)/movie/types';
 
 export const searchMovies = async ({

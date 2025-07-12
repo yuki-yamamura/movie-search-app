@@ -4,9 +4,9 @@ import { ChevronDown } from 'lucide-react';
 import { useQueryState } from 'nuqs';
 
 import { AVAILABLE_YEARS } from '@/app/(models)/movie/constants';
-import { movieSearchParamsSchema } from '@/app/(models)/movie/schemas/search-params';
+import { movieSearchParamsSchema } from '@/app/(models)/movie/schemas/movie-search-params';
 
-import type { MovieSearchParams } from '@/app/(models)/movie/schemas/search-params';
+import type { MovieSearchParams } from '@/app/(models)/movie/schemas/movie-search-params';
 
 import styles from './release-year-select.module.css';
 

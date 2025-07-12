@@ -6,7 +6,7 @@ import { useRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { START_PAGE_INDEX } from '@/app/(models)/movie/constants';
-import { movieSearchParamsSchema } from '@/app/(models)/movie/schemas/search-params';
+import { movieSearchParamsSchema } from '@/app/(models)/movie/schemas/movie-search-params';
 
 import styles from './search-input.module.css';
 

@@ -2,14 +2,17 @@
 
 import { useQueryStates } from 'nuqs';
 
-import { movieSearchParamsSchema } from '@/app/(models)/movie/schemas/search-params';
+import { movieSearchParamsSchema } from '@/app/(models)/movie/schemas/movie-search-params';
 
 import styles from './filter-status.module.css';
 
 export const FilterStatus = () => {
   const [{ search, releaseYear }] = useQueryStates(movieSearchParamsSchema);
-  const textList = [`キーワード「${search}」`, `リリース年「${releaseYear}年」`];
-  const statusText = textList.join('、');
+  const textList = [
+    search && `キーワード「${search}」`,
+    releaseYear && `リリース年「${releaseYear}年」`,
+  ];
+  const statusText = textList.filter(Boolean).join('、');
 
   if (!search && !releaseYear) {
     return null;
