@@ -18,14 +18,14 @@ const Page = async ({ searchParams }: Props) => {
   return (
     <main className={styles.base}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Movies</h1>
+        <h1 className={styles.title}>映画を探す</h1>
         <MovieFilter />
       </div>
 
-      <section className={styles.results}>
+      <div className={styles.results}>
         <h2 className={styles.sectionTitle}>Search Results</h2>
         <MovieGallery {...params} />
-      </section>
+      </div>
     </main>
   );
 };

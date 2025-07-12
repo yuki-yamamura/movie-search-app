@@ -1,6 +1,13 @@
 .base {
+  position: relative;
+  display: flex;
   flex: 1;
-  padding: var(--spacing-md);
+  align-items: center;
+}
+
+.input {
+  flex: 1;
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) 3rem;
   font-size: var(--text-base);
   color: var(--text-primary);
   background: var(--background);
@@ -9,7 +16,14 @@
   transition: border-color var(--transition-fast);
 }
 
-.base:focus {
+.input:focus {
   outline: none;
   border-color: var(--color-primary);
+}
+
+.icon {
+  position: absolute;
+  left: var(--spacing-md);
+  color: var(--text-secondary);
+  cursor: pointer;
 }
