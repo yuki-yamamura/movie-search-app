@@ -12,7 +12,9 @@ import styles from './search-input.module.css';
 
 export const SearchInput = () => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [{ search }, setSearchParams] = useQueryStates(movieSearchParamsSchema);
+  const [{ search }, setSearchParams] = useQueryStates(movieSearchParamsSchema, {
+    shallow: false,
+  });
   const debouncedSearch = useDebouncedCallback((searchValue: string) => {
     setSearchParams({ search: searchValue || null, page: START_PAGE_INDEX });
   }, 500);

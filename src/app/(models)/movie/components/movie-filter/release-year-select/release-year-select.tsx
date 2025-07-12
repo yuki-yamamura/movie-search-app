@@ -13,12 +13,12 @@ import styles from './release-year-select.module.css';
 export const ReleaseYearSelect = () => {
   const [releaseYear, setReleaseYear] = useQueryState(
     'releaseYear',
-    movieSearchParamsSchema.releaseYear,
+    movieSearchParamsSchema.releaseYear.withOptions({ shallow: false })
   );
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value === 'all' ? null : event.target.value;
-    setReleaseYear(value as unknown as MovieSearchParams['releaseYear']);
+    const value = event.target.value === 'all' ? null : Number(event.target.value);
+    setReleaseYear(value as MovieSearchParams['releaseYear']);
   };
 
   return (

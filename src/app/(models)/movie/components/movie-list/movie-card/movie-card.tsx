@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const MovieCard = ({ movie }: Props) => {
-  const imageUrl = getImageUrl({ path: movie.poster_path, size: 'w500' });
+  const imageUrl = getImageUrl({ imagePath: movie.poster_path, size: 'w500' });
   const releaseYear = movie.release_date ? new Date(movie.release_date).getFullYear() : 'N/A';
 
   return (

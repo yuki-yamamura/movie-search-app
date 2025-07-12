@@ -1,41 +1,31 @@
+import path from 'path';
+
 import { TMDBError } from '@/app/(models)/movie/types';
 import { tmdbClient } from '@/lib/tmdb';
 
-import type { MovieSearchParams } from '../schemas/movie-search-params';
-import type { DiscoverMovieResponse } from '@/app/(models)/movie/types';
+import type { MovieSearchParams } from '@/app/(models)/movie/schemas/movie-search-params';
 
-export const searchMovies = async ({
-  search,
-  releaseYear,
-  page,
-}: MovieSearchParams): Promise<DiscoverMovieResponse> => {
-  if (search) {
-    const { data, error } = await tmdbClient.GET('/3/search/movie', {
-      params: {
-        query: {
-          query: search,
-          page,
-          ...(releaseYear && { year: releaseYear.toString() }),
+export const searchMovies = async ({ search, releaseYear, page }: MovieSearchParams) => {
+  const result = search
+    ? tmdbClient.GET('/3/search/movie', {
+        params: {
+          query: {
+            page,
+            query: search,
+            ...(releaseYear && { year: releaseYear.toString() }),
+          },
         },
-      },
-    });
-
-    if (error) {
-      throw new TMDBError(error);
-    }
-
-    return data;
-  }
-
-  const { data, error } = await tmdbClient.GET('/3/discover/movie', {
-    params: {
-      query: {
-        page,
-        sort_by: 'popularity.desc',
-        ...(releaseYear && { primary_release_year: releaseYear }),
-      },
-    },
-  });
+      })
+    : tmdbClient.GET('/3/discover/movie', {
+        params: {
+          query: {
+            page,
+            sort_by: 'popularity.desc',
+            ...(releaseYear && { primary_release_year: releaseYear }),
+          },
+        },
+      });
+  const { data, error } = await result;
 
   if (error) {
     throw new TMDBError(error);
@@ -45,17 +35,17 @@ export const searchMovies = async ({
 };
 
 export const getImageUrl = ({
-  path,
-  size,
+  imagePath,
+  size = 'w500',
 }: {
-  path: string | null | undefined;
-  size: 'w200' | 'w500' | 'original';
-}): string => {
+  imagePath?: string;
+  size?: 'w200' | 'w500' | 'original';
+}) => {
   if (!process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL) {
     throw new Error('TMDB_IMAGE_BASE_URL environment variable is not set');
   }
 
-  return !path
-    ? '/placeholder-movie.png'
-    : `${process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL}/${size}${path}`;
+  return imagePath
+    ? path.join(process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL, size, imagePath)
+    : '/placeholder-movie.png';
 };
