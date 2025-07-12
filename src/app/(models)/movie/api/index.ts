@@ -6,13 +6,12 @@ import { tmdbClient } from '@/lib/tmdb';
 import type { MovieSearchParams } from '@/app/(models)/movie/schemas/movie-search-params';
 
 export const searchMovies = async ({ search, releaseYear, page }: MovieSearchParams) => {
-  const result = search
+  const result = !!search
     ? tmdbClient.GET('/3/search/movie', {
         params: {
           query: {
             page,
             query: search,
-            ...(releaseYear && { year: releaseYear.toString() }),
           },
         },
       })
@@ -20,7 +19,6 @@ export const searchMovies = async ({ search, releaseYear, page }: MovieSearchPar
         params: {
           query: {
             page,
-            sort_by: 'popularity.desc',
             ...(releaseYear && { primary_release_year: releaseYear }),
           },
         },
@@ -31,7 +29,22 @@ export const searchMovies = async ({ search, releaseYear, page }: MovieSearchPar
     throw new TMDBError(error);
   }
 
-  return data;
+  /**
+   * NOTE:
+   *  TMDB API (`/3/search/movie`) の `year` フィールドでリリース年を指定しても、なぜかそれ以外の映画もレスポンスに含まれる。
+   *  そのため、API側での対応は困難と判断して、プログラム上でリリース年の絞り込みを行うことにした。
+   */
+  if (!releaseYear) {
+    return data;
+  }
+  const filteredMovies = data.results?.filter((movie) => {
+    return movie.release_date && movie.release_date.startsWith(releaseYear.toString());
+  });
+
+  return {
+    ...data,
+    results: filteredMovies,
+  };
 };
 
 export const getImageUrl = ({
