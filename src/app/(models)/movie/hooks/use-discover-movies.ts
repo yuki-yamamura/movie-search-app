@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 
-import { discoverMovies } from '@/app/(models)/movie/logic/api';
+import { searchMovies } from '@/app/(models)/movie/api';
 
 import type { SearchMovieResponse, DiscoverMovieResponse } from '@/app/(models)/movie/types';
 
@@ -24,7 +24,7 @@ export const useDiscoverMovies = ({
 } => {
   const { data, error, isLoading, mutate } = useSWR<SearchMovieResponse | DiscoverMovieResponse>(
     [`/discover/movie`, query, year, page],
-    () => discoverMovies({ query, year, page }),
+    () => searchMovies({ query, year, page }),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,

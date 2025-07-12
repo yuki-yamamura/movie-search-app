@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import useSWR from 'swr';
 
-import { discoverMovies } from '@/app/(models)/movie/logic/api';
+import { searchMovies } from '@/app/(models)/movie/api';
 
 import type { Movie, SearchMovieResponse, DiscoverMovieResponse } from '@/app/(models)/movie/types';
 
@@ -29,7 +29,7 @@ export const useLoadMoreMovies = ({
   const { data, error } = useSWR<SearchMovieResponse | DiscoverMovieResponse>(
     currentPage > 1 ? ['discover-movies', searchQuery, releaseYear, currentPage] : null,
     () =>
-      discoverMovies({
+      searchMovies({
         query: searchQuery || undefined,
         year: releaseYear ? parseInt(releaseYear) : undefined,
         page: currentPage,

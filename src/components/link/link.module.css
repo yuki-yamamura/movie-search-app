@@ -1,0 +1,13 @@
+.base {
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: white;
+  text-decoration: none;
+  appearance: none;
+  cursor: pointer;
+  background: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+}

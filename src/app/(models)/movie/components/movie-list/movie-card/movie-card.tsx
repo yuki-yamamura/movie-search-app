@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { getImageUrl } from '@/app/(models)/movie/logic/api';
+import { getImageUrl } from '@/app/(models)/movie/api';
 
 import { StarRating } from './star-rating';
 

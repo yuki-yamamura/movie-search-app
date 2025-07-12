@@ -2,7 +2,7 @@
 
 import { useQueryState } from 'nuqs';
 
-import { AVAILABLE_YEARS } from '../../../constants/years';
+import { AVAILABLE_YEARS } from '../../../constants';
 import { movieSearchParamsSchema } from '../../../schemas/search-params';
 
 import type { MovieSearchParams } from '../../../schemas/search-params';

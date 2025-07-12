@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import { Link } from '@/components/link';
+import { pathMap } from '@/utils/path-map';
 
 import styles from './page.module.css';
 
@@ -11,9 +12,7 @@ const Page = () => (
       </p>
 
       <div className={styles.ctas}>
-        <Link href="/movies" className={styles.primary}>
-          Browse Movies
-        </Link>
+        <Link href={pathMap['/movies'].get()}>Browse Movies</Link>
       </div>
     </main>
   </div>

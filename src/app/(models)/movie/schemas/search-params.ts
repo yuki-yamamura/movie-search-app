@@ -1,7 +1,6 @@
-import { parseAsString, parseAsInteger, parseAsNumberLiteral } from 'nuqs';
+import { parseAsString, parseAsInteger, parseAsNumberLiteral } from 'nuqs/server';
 
-import { START_PAGE_INDEX } from '@/app/(models)/movie/constants';
-import { AVAILABLE_YEARS } from '@/app/(models)/movie/constants/years';
+import { AVAILABLE_YEARS, START_PAGE_INDEX } from '@/app/(models)/movie/constants';
 
 import type { inferParserType } from 'nuqs';
 

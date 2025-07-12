@@ -1,8 +1,7 @@
-import { createLoader } from 'nuqs';
+import { createLoader } from 'nuqs/server';
 
 import { MovieFilter } from '@/app/(models)/movie/components/movie-filter/movie-filter';
-import { MovieList } from '@/app/(models)/movie/components/movie-list';
-import { discoverMovies } from '@/app/(models)/movie/logic/api';
+import { MovieGallery } from '@/app/(models)/movie/components/movie-gallery/movie-gallery';
 import { movieSearchParamsSchema } from '@/app/(models)/movie/schemas/search-params';
 
 import type { SearchParams } from 'nuqs';
@@ -14,14 +13,7 @@ type Props = {
 };
 
 const Page = async ({ searchParams }: Props) => {
-  const { search, releaseYear, page } = await createLoader(movieSearchParamsSchema)(searchParams);
-
-  // TODO: remove undefined
-  const initialData = await discoverMovies({
-    query: search || undefined,
-    year: releaseYear || undefined,
-    page,
-  });
+  const params = await createLoader(movieSearchParamsSchema)(searchParams);
 
   return (
     <main className={styles.base}>
@@ -31,25 +23,8 @@ const Page = async ({ searchParams }: Props) => {
       </div>
 
       <section className={styles.results}>
-        <h2 className={styles.sectionTitle}>
-          {isSearching
-            ? `Search Results for "${currentSearch}"`
-            : hasFilters
-              ? 'Filtered Movies'
-              : 'Popular Movies'}
-        </h2>
-        {loadMoreData.totalResults > 0 && (
-          <p className={styles.resultCount}>Found {loadMoreData.totalResults} movies</p>
-        )}
-        <MovieList
-          movies={loadMoreData.movies}
-          isLoading={false}
-          error={loadMoreData.error}
-          onLoadMore={handleLoadMore}
-          isLoadingMore={loadMoreData.isLoadingMore}
-          hasMorePages={loadMoreData.hasMorePages}
-          totalResults={loadMoreData.totalResults}
-        />
+        <h2 className={styles.sectionTitle}>Search Results</h2>
+        <MovieGallery {...params} />
       </section>
     </main>
   );
