@@ -1,22 +1,38 @@
 .base {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: min-content;
+}
+
+.select {
   box-sizing: border-box;
-  min-width: 160px;
+  width: 100%;
+  min-width: 200px;
   height: calc(var(--text-base) * var(--leading-normal) + var(--spacing-md) * 2 + 2px);
-  padding: var(--spacing-md);
+  padding: var(--spacing-md) 3rem var(--spacing-md) var(--spacing-md);
   font-size: var(--text-base);
   color: var(--text-primary);
+  appearance: none;
   cursor: pointer;
   background: var(--background);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   transition: border-color var(--transition-fast);
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  &:hover {
+    border-color: var(--text-tertiary);
+  }
 }
 
-.base:focus {
-  outline: none;
-  border-color: var(--color-primary);
-}
-
-.base:hover {
-  border-color: var(--text-tertiary);
+.icon {
+  position: absolute;
+  right: var(--spacing-md);
+  color: var(--text-secondary);
+  pointer-events: none;
 }

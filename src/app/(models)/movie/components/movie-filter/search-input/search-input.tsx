@@ -38,7 +38,7 @@ export const SearchInput = () => {
         ref={inputRef}
         type="text"
         name="search"
-        placeholder="キーワードで検索"
+        placeholder="タイトルで検索"
         defaultValue={search ?? ''}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}

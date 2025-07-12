@@ -1,3 +1,9 @@
+.base {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
 .searchForm {
   display: flex;
   gap: var(--spacing-md);

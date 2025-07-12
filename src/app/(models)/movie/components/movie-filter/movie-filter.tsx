@@ -4,15 +4,13 @@ import { SearchInput } from './search-input';
 
 import styles from './movie-filter.module.css';
 
-export const MovieFilter = () => {
-  return (
-    <div>
-      <div className={styles.searchForm}>
-        <SearchInput />
-        <ReleaseYearSelect />
-      </div>
-
-      <FilterStatus />
+export const MovieFilter = () => (
+  <div className={styles.base}>
+    <div className={styles.searchForm}>
+      <SearchInput />
+      <ReleaseYearSelect />
     </div>
-  );
-};
+
+    <FilterStatus />
+  </div>
+);
