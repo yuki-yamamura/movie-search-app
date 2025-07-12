@@ -6,7 +6,7 @@ import styles from './movie-filter.module.css';
 
 export const MovieFilter = () => (
   <div className={styles.base}>
-    <div className={styles.searchForm}>
+    <div className={styles.input}>
       <SearchInput />
       <ReleaseYearSelect />
     </div>

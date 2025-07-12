@@ -1,16 +1,22 @@
 import { MovieCard } from './movie-card';
 
-import type { DiscoverMovieResponse } from '@/app/(models)/movie/types';
+import type { Movie } from '@/app/(models)/movie/types';
 
 import styles from './movie-list.module.css';
 
-type Props = DiscoverMovieResponse;
+type Props = {
+  movies?: Movie[];
+};
 
-export const MovieList = ({ results }: Props) => {
+export const MovieList = ({ movies }: Props) => {
+  if (!movies || movies.length === 0) {
+    return <div className={styles.base}>映画が見つかりませんでした。</div>;
+  }
+
   return (
-    <div className={styles.container}>
-      <div className={styles.base}>
-        {results?.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
+    <div className={styles.base}>
+      <div className={styles.container}>
+        {movies?.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
       </div>
     </div>
   );

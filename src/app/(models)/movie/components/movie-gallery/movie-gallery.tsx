@@ -5,7 +5,7 @@ import type { MovieSearchParams } from '@/app/(models)/movie/schemas/movie-searc
 
 type Props = MovieSearchParams;
 export const MovieGallery = async (props: Props) => {
-  const result = await searchMovies(props);
+  const { results: movies } = await searchMovies(props);
 
-  return <MovieList {...result} />;
+  return <MovieList movies={movies} />;
 };

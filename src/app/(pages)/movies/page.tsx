@@ -21,11 +21,7 @@ const Page = async ({ searchParams }: Props) => {
         <h1 className={styles.title}>映画を探す</h1>
         <MovieFilter />
       </div>
-
-      <div className={styles.results}>
-        <h2 className={styles.sectionTitle}>Search Results</h2>
-        <MovieGallery {...params} />
-      </div>
+      <MovieGallery {...params} />
     </main>
   );
 };

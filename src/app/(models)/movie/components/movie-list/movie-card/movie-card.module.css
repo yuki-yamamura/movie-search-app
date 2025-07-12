@@ -58,11 +58,6 @@
   color: var(--text-secondary);
 }
 
-.rating {
-  font-weight: 500;
-  color: var(--color-warning);
-}
-
 .overview {
   display: -webkit-box;
   overflow: hidden;
