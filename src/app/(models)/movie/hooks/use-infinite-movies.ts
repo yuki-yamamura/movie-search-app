@@ -1,31 +1,22 @@
 import { useCallback } from 'react';
 import useSWRInfinite from 'swr/infinite';
 
-import { searchMovies } from '@/app/(models)/movie/api';
+import { searchMovies } from '@/app/(models)/movie/api/client';
 import { START_PAGE_INDEX } from '@/app/(models)/movie/constants';
 
 import type { MovieSearchParams } from '@/app/(models)/movie/schemas/movie-search-params';
 import type { DiscoverMovieResponse, SearchMovieResponse } from '@/app/(models)/movie/types';
 import type { SWRInfiniteKeyLoader } from 'swr/infinite';
 
-type UseInfiniteMoviesParams = Pick<MovieSearchParams, 'search' | 'releaseYear'> & {};
-
-const fetcher = async ([_, search, releaseYear, page]: [
-  string,
-  MovieSearchParams['search'],
-  MovieSearchParams['releaseYear'],
-  MovieSearchParams['page'],
-]) => {
-  const params: MovieSearchParams = {
-    search,
-    releaseYear,
-    page,
-  };
-
-  return searchMovies(params);
+type UseInfiniteMoviesParams = Pick<MovieSearchParams, 'search' | 'releaseYear'> & {
+  initialData?: (DiscoverMovieResponse | SearchMovieResponse)[];
 };
 
-export const useInfiniteMovies = ({ search, releaseYear }: UseInfiniteMoviesParams) => {
+export const useInfiniteMovies = ({
+  search,
+  releaseYear,
+  initialData,
+}: UseInfiniteMoviesParams) => {
   const getKey: SWRInfiniteKeyLoader = useCallback(
     (pageIndex: number, previousPageData: DiscoverMovieResponse | SearchMovieResponse | null) => {
       if (pageIndex === 0) {
@@ -40,7 +31,14 @@ export const useInfiniteMovies = ({ search, releaseYear }: UseInfiniteMoviesPara
     },
     [search, releaseYear],
   );
-  const { data, error, size: currentPage, setSize, isValidating } = useSWRInfinite(getKey, fetcher);
+
+  const {
+    data,
+    error,
+    size: currentPage,
+    setSize,
+    isValidating,
+  } = useSWRInfinite(getKey, fetcher, { fallbackData: initialData });
 
   const movies = data?.flatMap((page) => page.results)?.filter((movie) => !!movie) ?? [];
   const totalPages = data?.[0]?.total_pages || 0;
@@ -61,4 +59,22 @@ export const useInfiniteMovies = ({ search, releaseYear }: UseInfiniteMoviesPara
     loadNextPage,
     error,
   };
+};
+
+const fetcher = async (
+  key: readonly [
+    string,
+    MovieSearchParams['search'],
+    MovieSearchParams['releaseYear'],
+    MovieSearchParams['page'],
+  ],
+) => {
+  const [, search, releaseYear, page] = key;
+  const params: MovieSearchParams = {
+    search,
+    releaseYear,
+    page,
+  };
+
+  return searchMovies(params);
 };

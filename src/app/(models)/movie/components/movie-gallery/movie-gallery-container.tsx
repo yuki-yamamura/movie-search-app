@@ -1,4 +1,4 @@
-import { searchMovies } from '@/app/(models)/movie/api';
+import { searchMovies } from '@/app/(models)/movie/api/server';
 import { MovieGalleryPresenter } from '@/app/(models)/movie/components/movie-gallery/movie-gallery-presenter';
 
 import type { MovieSearchParams } from '@/app/(models)/movie/schemas/movie-search-params';
@@ -6,7 +6,7 @@ import type { MovieSearchParams } from '@/app/(models)/movie/schemas/movie-searc
 type Props = MovieSearchParams;
 
 export const MovieGallery = async (props: Props) => {
-  const initialData = await searchMovies(props);
+  const response = await searchMovies(props);
 
-  return <MovieGalleryPresenter initialMovies={initialData} />;
+  return <MovieGalleryPresenter initialData={response} />;
 };

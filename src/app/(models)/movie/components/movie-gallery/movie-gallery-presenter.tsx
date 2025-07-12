@@ -7,12 +7,19 @@ import { MovieList } from '@/app/(models)/movie/components/movie-list';
 import { useInfiniteMovies } from '@/app/(models)/movie/hooks/use-infinite-movies';
 import { movieSearchParamsSchema } from '@/app/(models)/movie/schemas/movie-search-params';
 
-export const MovieGalleryPresenter = () => {
+import type { DiscoverMovieResponse, SearchMovieResponse } from '@/app/(models)/movie/types';
+
+type Props = {
+  initialData?: DiscoverMovieResponse | SearchMovieResponse;
+};
+
+export const MovieGalleryPresenter = ({ initialData }: Props) => {
   const [{ search, releaseYear }] = useQueryStates(movieSearchParamsSchema);
   const { movies, isValidating, hasNextPage, totalMovies, loadNextPage, error } = useInfiniteMovies(
     {
       search,
       releaseYear,
+      initialData: initialData && [initialData],
     },
   );
 
