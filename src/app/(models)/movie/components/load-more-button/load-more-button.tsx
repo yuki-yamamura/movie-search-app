@@ -36,7 +36,7 @@ export const LoadMoreButton = ({
         {isLoading ? (
           '読み込み中...'
         ) : (
-          <div>
+          <div className={styles.inner}>
             <span>さらに読み込む</span>
             <ArrowRight size={16} />
           </div>
