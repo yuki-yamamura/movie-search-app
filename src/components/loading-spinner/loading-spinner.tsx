@@ -2,7 +2,7 @@ import styles from './loading-spinner.module.css';
 
 export const LoadingSpinner = () => {
   return (
-    <div className={styles.base} role="status" aria-label="Loading">
+    <div className={styles.base} role="status" aria-label="読み込み中">
       <div className={styles.spinner}></div>
       <span className={styles.text}>Loading more movies...</span>
     </div>
