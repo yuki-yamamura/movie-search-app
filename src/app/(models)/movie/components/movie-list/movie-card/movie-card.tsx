@@ -22,7 +22,13 @@ export const MovieCard = ({
     <article className={styles.base}>
       <div className={styles.imageWrapper}>
         {poster_path ? (
-          <Image src={imageUrl} alt={title ?? 'ポスター画像'} fill className={styles.image} />
+          <Image 
+            src={imageUrl} 
+            alt={title ?? 'ポスター画像'} 
+            fill 
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+            className={styles.image} 
+          />
         ) : (
           <div className={styles.placeholder}>
             <span>No Image</span>

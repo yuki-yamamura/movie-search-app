@@ -9,7 +9,7 @@ type Props = {
   onLoadMore: () => void;
   isLoading: boolean;
   hasMorePages: boolean;
-  totalResults: number;
+  totalMovies: number;
   currentCount: number;
 };
 
@@ -17,7 +17,7 @@ export const LoadMoreButton = ({
   onLoadMore,
   isLoading,
   hasMorePages,
-  totalResults,
+  totalMovies,
   currentCount,
 }: Props) => {
   if (!hasMorePages) {
@@ -44,7 +44,7 @@ export const LoadMoreButton = ({
       </button>
       {isLoading && <LoadingSpinner />}
       <p className={styles.info}>
-        {`${currentCount.toLocaleString()}件 / ${totalResults.toLocaleString()}件`}
+        {`${currentCount.toLocaleString()}件 / ${totalMovies.toLocaleString()}件`}
       </p>
     </div>
   );
