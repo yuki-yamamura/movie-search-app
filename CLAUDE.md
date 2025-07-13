@@ -9,6 +9,7 @@ This is a Next.js 15 movie search application that uses The Movie Database (TMDB
 ## Development Commands
 
 ### Essential Commands
+
 - `npm run dev` - Start development server on localhost:3000 (auto-generates types)
 - `npm run build` - Build production version (auto-generates types)
 - `npm run start` - Start production server
@@ -17,18 +18,21 @@ This is a Next.js 15 movie search application that uses The Movie Database (TMDB
 - `npm run generate-types` - Generate TypeScript types from OpenAPI spec
 
 ### Testing Commands
+
 - `npm run test` - Run tests with Vitest
 - `npm run test:watch` - Run tests in watch mode
 - `npm run test:ui` - Run tests with UI interface
 - `npx vitest run path/to/file.test.tsx` - Run a single test file
 
 ### Linting Commands
+
 - `npm run lint:style` - Run Stylelint on CSS files
 - `npm run lint` - Run both ESLint and Stylelint
 
 ## Architecture
 
 ### Directory Structure
+
 The app follows a domain-driven design with Next.js App Router:
 
 ```
@@ -44,14 +48,17 @@ src/app/
 ### Key Patterns
 
 #### Data Fetching
+
 - **Hybrid RSC + Client Pattern**: Initial data loads server-side, additional data loads client-side
 - Uses SWR for client-side caching and data synchronization
-- Custom hooks (`useDiscoverMovies`, `useLoadMoreMovies`) wrap API calls with data accumulation
-- All API logic centralized in `logic/api.ts` and works in both server and client environments
+- Custom hooks (`useInfiniteMovies`) wrap API calls with data accumulation using SWR Infinite
+- **API Architecture**: Dual API pattern with `api/server.ts` (server actions) and `api/client.ts` (client-side calls)
+- Server API handles initial data fetching, client API handles infinite loading and search
 - **Type Safety**: Uses `openapi-fetch` with auto-generated types from TMDB OpenAPI spec (`specs/tmdb-api-v3.yaml`)
 - Types are regenerated automatically during dev/build processes
 
 #### Component Architecture
+
 - **Server Components**: Handle initial data fetching and pass props to client components
 - **Client Components**: Manage interactive features (search, filters, pagination)
 - Components are co-located with their styles (`.module.css`)
@@ -59,18 +66,22 @@ src/app/
 - Components follow a consistent props pattern with loading/error states
 
 #### Environment Variables
-Required environment variables:
+
+Required environment variables (create `.env.local` based on README setup):
+
 - `NEXT_PUBLIC_TMDB_API_BASE_URL`
 - `NEXT_PUBLIC_TMDB_API_ACCESS_TOKEN`
 - `NEXT_PUBLIC_TMDB_IMAGE_BASE_URL`
 
 ### Testing Setup
+
 - Uses Vitest with jsdom environment
 - Testing Library React for component testing
 - Tests are co-located with components (`.test.tsx` files)
 - Global test setup in `vitest.setup.ts`
 
 ### Code Style
+
 - Uses ESLint with Next.js config
 - Stylelint for CSS linting with standard config
 - Prettier for code formatting
@@ -79,12 +90,13 @@ Required environment variables:
 
 ## Key Files to Understand
 
-- `src/app/(models)/movie/logic/api.ts` - All TMDB API interactions with type-safe client
+- `src/app/(models)/movie/api/server.ts` - Server-side TMDB API calls with custom year filtering
+- `src/app/(models)/movie/api/client.ts` - Client-side TMDB API calls
 - `src/app/(models)/movie/hooks/` - Data fetching hooks with SWR
 - `src/app/(models)/movie/types/movie.ts` - Core type definitions
 - `src/app/(pages)/movies/page.tsx` - Server component for initial data fetching
 - `src/app/(pages)/movies/client-page.tsx` - Client component for interactivity
-- `src/app/(models)/movie/hooks/use-load-more-movies.ts` - Load More functionality with data accumulation
+- `src/app/(models)/movie/hooks/use-infinite-movies.ts` - Infinite scroll functionality with SWR Infinite
 - `src/types/generated/tmdb-api.d.ts` - Auto-generated API types from OpenAPI spec
 - `specs/tmdb-api-v3.yaml` - OpenAPI specification for TMDB API
 - `vitest.config.ts` - Test configuration with path aliases
@@ -96,5 +108,6 @@ Required environment variables:
 - SWR is configured to not revalidate on focus/reconnect for better UX
 - TypeScript path aliases are configured (`@/` points to `src/`)
 - Image paths from TMDB API are handled with fallbacks to placeholder images
-- **Load More Pattern**: Uses data accumulation strategy where server provides initial page and client fetches additional pages progressively
+- **Infinite Scroll Pattern**: Uses SWR Infinite with data accumulation where server provides initial page and client fetches additional pages progressively
+- **TMDB API Limitation**: Year filtering is implemented client-side because TMDB's year parameter doesn't work reliably
 - **Next.js 15**: Server component props use `Promise<searchParams>` pattern requiring async/await

@@ -1,6 +1,7 @@
 import { cx } from 'class-variance-authority';
+import { ArrowRight } from 'lucide-react';
 
-import { LoadingSpinner } from '@/app/(models)/movie/components/loading-spinner/loading-spinner';
+import { LoadingSpinner } from '@/components/loading-spinner/loading-spinner';
 
 import styles from './load-more-button.module.css';
 
@@ -8,32 +9,42 @@ type Props = {
   onLoadMore: () => void;
   isLoading: boolean;
   hasMorePages: boolean;
-  totalResults: number;
+  totalMovies: number;
   currentCount: number;
 };
 
-export const LoadMoreButton = ({ 
-  onLoadMore, 
-  isLoading, 
-  hasMorePages, 
-  totalResults, 
-  currentCount 
+export const LoadMoreButton = ({
+  onLoadMore,
+  isLoading,
+  hasMorePages,
+  totalMovies,
+  currentCount,
 }: Props) => {
-  if (!hasMorePages) return null;
+  if (!hasMorePages) {
+    return null;
+  }
 
   return (
     <div className={styles.base}>
-      <button 
-        className={cx(styles.button, isLoading && styles.buttonDisabled)}
-        onClick={onLoadMore}
-        disabled={isLoading}
+      <button
         type="button"
+        disabled={isLoading}
+        aria-disabled={isLoading}
+        onClick={onLoadMore}
+        className={cx(styles.button, isLoading && styles.buttonDisabled)}
       >
-        {isLoading ? 'Loading...' : 'Load More Movies'}
+        {isLoading ? (
+          '読み込み中...'
+        ) : (
+          <div className={styles.inner}>
+            <span>さらに読み込む</span>
+            <ArrowRight size={16} />
+          </div>
+        )}
       </button>
       {isLoading && <LoadingSpinner />}
       <p className={styles.info}>
-        Showing {currentCount} of {totalResults} movies
+        {`${currentCount.toLocaleString()}件 / ${totalMovies.toLocaleString()}件`}
       </p>
     </div>
   );

@@ -1,1 +1,1 @@
-export { ReleaseYearSelect } from './release-year-select';
+export * from './release-year-select';

@@ -1,20 +1,15 @@
 .base {
   position: relative;
   display: flex;
+  flex: 1;
   align-items: center;
-  width: min-content;
 }
 
-.select {
-  box-sizing: border-box;
-  width: 100%;
-  min-width: 200px;
-  height: calc(var(--text-base) * var(--leading-normal) + var(--spacing-md) * 2 + 2px);
-  padding: var(--spacing-md) 3rem var(--spacing-md) var(--spacing-md);
+.input {
+  flex: 1;
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) 3rem;
   font-size: var(--text-base);
   color: var(--text-primary);
-  appearance: none;
-  cursor: pointer;
   background: var(--background);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
@@ -24,15 +19,11 @@
     outline: none;
     border-color: var(--color-primary);
   }
-
-  &:hover {
-    border-color: var(--text-tertiary);
-  }
 }
 
 .icon {
   position: absolute;
-  right: var(--spacing-md);
+  left: var(--spacing-md);
   color: var(--text-secondary);
-  pointer-events: none;
+  cursor: pointer;
 }

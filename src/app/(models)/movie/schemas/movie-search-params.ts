@@ -1,12 +1,12 @@
-import { parseAsString, parseAsInteger, parseAsNumberLiteral } from 'nuqs';
+import { parseAsInteger, parseAsNumberLiteral } from 'nuqs/server';
 
-import { START_PAGE_INDEX } from '@/app/(models)/movie/constants';
-import { AVAILABLE_YEARS } from '@/app/(models)/movie/constants/years';
+import { AVAILABLE_YEARS, START_PAGE_INDEX } from '@/app/(models)/movie/constants';
+import { parseAsEncodedString } from '@/lib/nuqs';
 
 import type { inferParserType } from 'nuqs';
 
 export const movieSearchParamsSchema = {
-  search: parseAsString,
+  search: parseAsEncodedString,
   releaseYear: parseAsNumberLiteral(AVAILABLE_YEARS),
   page: parseAsInteger.withDefault(START_PAGE_INDEX),
 };

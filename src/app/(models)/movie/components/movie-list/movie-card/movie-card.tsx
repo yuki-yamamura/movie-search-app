@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { getImageUrl } from '@/app/(models)/movie/logic/api';
+import { getImageUrl } from '@/app/(models)/movie/utils/image';
 
 import { StarRating } from './star-rating';
 
@@ -12,20 +12,22 @@ type Props = {
   movie: Movie;
 };
 
-export const MovieCard = ({ movie }: Props) => {
-  const imageUrl = getImageUrl({ path: movie.poster_path, size: 'w500' });
-  const releaseYear = movie.release_date ? new Date(movie.release_date).getFullYear() : 'N/A';
+export const MovieCard = ({
+  movie: { poster_path, release_date, title, vote_average, overview },
+}: Props) => {
+  const imageUrl = getImageUrl({ imagePath: poster_path });
+  const releaseYear = release_date ? new Date(release_date).getFullYear() : undefined;
 
   return (
     <article className={styles.base}>
       <div className={styles.imageWrapper}>
-        {movie.poster_path ? (
-          <Image
-            src={imageUrl}
-            alt={movie.title || 'Movie poster'}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className={styles.image}
+        {poster_path ? (
+          <Image 
+            src={imageUrl} 
+            alt={title ?? 'ポスター画像'} 
+            fill 
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+            className={styles.image} 
           />
         ) : (
           <div className={styles.placeholder}>
@@ -34,12 +36,12 @@ export const MovieCard = ({ movie }: Props) => {
         )}
       </div>
       <div className={styles.content}>
-        <h3 className={styles.title}>{movie.title || 'Unknown Title'}</h3>
+        <h3 className={styles.title}>{title || '不明なタイトル'}</h3>
         <div className={styles.meta}>
-          <span className={styles.year}>{releaseYear}</span>
-          <StarRating rating={movie.vote_average} className={styles.rating} showRating />
+          {releaseYear && <span className={styles.year}>{releaseYear}</span>}
+          <StarRating rating={vote_average} />
         </div>
-        <p className={styles.overview}>{movie.overview || 'No description available'}</p>
+        {overview && <p className={styles.overview}>{overview}</p>}
       </div>
     </article>
   );
