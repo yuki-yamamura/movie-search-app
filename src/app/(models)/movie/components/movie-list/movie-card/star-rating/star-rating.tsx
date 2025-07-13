@@ -1,4 +1,5 @@
 import { Star } from 'lucide-react';
+import { MoonStar } from 'lucide-react';
 
 import styles from './star-rating.module.css';
 
@@ -7,6 +8,15 @@ type Props = {
 };
 
 export const StarRating = ({ rating }: Props) => {
+  if (rating === 0) {
+    return (
+      <div className={styles.unrated} aria-label="Not rated">
+        <MoonStar className={styles.icon} size={16} />
+        <span className={styles.text}>Not rated</span>
+      </div>
+    );
+  }
+
   const fullStars = Math.floor(rating);
   const partialStarPercentage = rating % 1;
   const hasPartialStar = partialStarPercentage > 0;

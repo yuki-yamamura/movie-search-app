@@ -45,3 +45,20 @@
   font-weight: 500;
   color: var(--color-warning);
 }
+
+.unrated {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: var(--color-neutral-500);
+
+  .icon {
+    color: var(--color-neutral-500);
+  }
+
+  .text {
+    font-size: var(--text-sm);
+    font-weight: 400;
+    color: var(--color-neutral-500);
+  }
+}
