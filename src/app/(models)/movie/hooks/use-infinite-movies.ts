@@ -48,6 +48,7 @@ export const useInfiniteMovies = ({
   const totalPages = data?.[0]?.total_pages || 0;
   const totalMovies = data?.[0]?.total_results || 0;
   const hasNextPage = currentPage < totalPages;
+  const isLoadingMore = isValidating && !!data;
 
   const loadNextPage = () => {
     if (hasNextPage && !isValidating) {
@@ -58,7 +59,7 @@ export const useInfiniteMovies = ({
   return {
     movies,
     isLoading,
-    isValidating,
+    isLoadingMore,
     hasNextPage,
     totalMovies,
     loadNextPage,
