@@ -1,6 +1,6 @@
-import { cx } from 'class-variance-authority';
 import { ArrowRight } from 'lucide-react';
 
+import { Button } from '@/components/button';
 import { LoadingSpinner } from '@/components/loading-spinner/loading-spinner';
 
 import styles from './load-more-button.module.css';
@@ -26,22 +26,23 @@ export const LoadMoreButton = ({
 
   return (
     <div className={styles.base}>
-      <button
+      <Button
         type="button"
+        variant="secondary"
+        size="large"
         disabled={isLoading}
         aria-disabled={isLoading}
         onClick={onLoadMore}
-        className={cx(styles.button, isLoading && styles.buttonDisabled)}
       >
         {isLoading ? (
           '読み込み中...'
         ) : (
-          <div className={styles.inner}>
+          <>
             <span>さらに読み込む</span>
             <ArrowRight size={16} />
-          </div>
+          </>
         )}
-      </button>
+      </Button>
       {isLoading && <LoadingSpinner />}
       <p className={styles.info}>
         {`${currentCount.toLocaleString()}件 / ${totalMovies.toLocaleString()}件`}

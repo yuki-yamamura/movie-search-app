@@ -1,0 +1,92 @@
+.base {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm, 8px) var(--spacing-md, 16px);
+  font-size: var(--text-base, 16px);
+  font-weight: 500;
+  text-decoration: none;
+  appearance: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md, 8px);
+  transition: all var(--transition-fast, 0.2s ease);
+}
+
+.base:disabled,
+.base[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.primary {
+  color: white;
+  background-color: var(--color-primary, #007bff);
+  border-color: var(--color-primary, #007bff);
+}
+
+.primary:disabled,
+.primary:hover:not(:disabled, [aria-disabled='true']) {
+  background-color: var(--color-primary-hover, #0056b3);
+  border-color: var(--color-primary-hover, #0056b3);
+}
+
+.primary:active:not(:disabled, [aria-disabled='true']) {
+  transform: translateY(1px);
+}
+
+.primary[aria-disabled='true'] {
+  background-color: var(--color-primary, #007bff);
+  border-color: var(--color-primary, #007bff);
+}
+
+.primary:disabled:hover,
+.primary[aria-disabled='true']:hover {
+  background-color: var(--color-primary, #007bff);
+  border-color: var(--color-primary, #007bff);
+  transform: none;
+}
+
+.secondary {
+  color: #333;
+  background-color: #fff;
+  border-color: #ddd;
+}
+
+.secondary:disabled,
+.secondary:hover:not(:disabled, [aria-disabled='true']) {
+  background-color: #f5f5f5;
+  border-color: #bbb;
+}
+
+.secondary:active:not(:disabled, [aria-disabled='true']) {
+  transform: translateY(1px);
+}
+
+.secondary[aria-disabled='true'] {
+  background-color: #fff;
+  border-color: #ddd;
+}
+
+.secondary:disabled:hover,
+.secondary[aria-disabled='true']:hover {
+  background-color: #fff;
+  border-color: #ddd;
+  transform: none;
+}
+
+.small {
+  padding: var(--spacing-xs, 4px) var(--spacing-sm, 8px);
+  font-size: var(--text-sm, 14px);
+}
+
+.medium {
+  padding: var(--spacing-sm, 8px) var(--spacing-md, 16px);
+  font-size: var(--text-base, 16px);
+}
+
+.large {
+  padding: var(--spacing-md, 12px) var(--spacing-xl, 24px);
+  font-size: var(--text-lg, 18px);
+}
