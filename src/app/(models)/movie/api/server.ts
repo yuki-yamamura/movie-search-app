@@ -12,6 +12,7 @@ export const searchMovies = async ({ search, releaseYear, page }: MovieSearchPar
           query: {
             page,
             query: search,
+            ...(releaseYear && { primary_release_year: releaseYear.toString() }),
           },
         },
       })
@@ -29,20 +30,27 @@ export const searchMovies = async ({ search, releaseYear, page }: MovieSearchPar
     throw new TMDBError(error);
   }
 
+  if (!releaseYear) {
+    return data;
+  }
+
   /**
    * NOTE:
    *  TMDB API (`/3/search/movie`) の `year` フィールドでリリース年を指定しても、なぜかそれ以外の映画もレスポンスに含まれる。
    *  そのため、API側での対応は困難と判断して、プログラム上でリリース年の絞り込みを行うことにした。
    */
-  if (!releaseYear) {
-    return data;
-  }
-  const filteredMovies = data.results?.filter((movie) => {
-    return movie.release_date && movie.release_date.startsWith(releaseYear.toString());
-  });
+  const filteredMovies = data.results?.filter(
+    (movie) => movie.release_date && movie.release_date.startsWith(releaseYear.toString()),
+  );
+
+  const filteredCount = filteredMovies?.length ?? 0;
+  const currentPageFilteredRatio = filteredCount / (data.results?.length ?? 1);
+  const totalResults = Math.round((data.total_results ?? 0) * currentPageFilteredRatio);
 
   return {
     ...data,
     results: filteredMovies,
+    total_results: totalResults,
+    total_pages: data.total_pages,
   };
 };

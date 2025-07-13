@@ -31,6 +31,7 @@ export const useInfiniteMovies = ({
     },
     [search, releaseYear],
   );
+  const shouldUseInitialData = !search && !releaseYear;
 
   const {
     data,
@@ -38,7 +39,9 @@ export const useInfiniteMovies = ({
     size: currentPage,
     setSize,
     isValidating,
-  } = useSWRInfinite(getKey, fetcher, { fallbackData: initialData });
+  } = useSWRInfinite(getKey, fetcher, {
+    fallbackData: shouldUseInitialData ? initialData : undefined,
+  });
 
   const movies = data?.flatMap((page) => page.results)?.filter((movie) => !!movie) ?? [];
   const totalPages = data?.[0]?.total_pages || 0;
