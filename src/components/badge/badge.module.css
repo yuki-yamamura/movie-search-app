@@ -1,0 +1,28 @@
+.base {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  border-radius: 12px;
+}
+
+.primary {
+  color: white;
+  background-color: #3b82f6;
+}
+
+.secondary {
+  color: #374151;
+  background-color: #e5e7eb;
+}
+
+.small {
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.medium {
+  padding: 4px 12px;
+  font-size: 14px;
+}
