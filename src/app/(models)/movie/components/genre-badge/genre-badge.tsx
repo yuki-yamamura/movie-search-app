@@ -1,22 +1,13 @@
 import { cva } from 'class-variance-authority';
 
 import { GenreEnumOptions, GenreEnum } from '@/app/(models)/movie/constants';
+import { Badge } from '@/components/badge';
 
 import type { GenreId } from '@/app/(models)/movie/constants';
 
 import styles from './genre-badge.module.css';
 
-type Props = {
-  genreId: GenreId;
-};
-
-export const GenreBadge = ({ genreId }: Props) => {
-  const genreName = GenreEnumOptions[genreId];
-
-  return <span className={badge({ genre: genreId })}>{genreName}</span>;
-};
-
-const badge = cva(styles.base, {
+const genreBadgeVariants = cva('', {
   variants: {
     genre: {
       [GenreEnum.ACTION]: styles.action,
@@ -32,3 +23,17 @@ const badge = cva(styles.base, {
     },
   },
 });
+
+type Props = {
+  genreId: GenreId;
+};
+
+export const GenreBadge = ({ genreId }: Props) => {
+  const genreName = GenreEnumOptions[genreId];
+
+  return (
+    <Badge size="small" className={genreBadgeVariants({ genre: genreId })}>
+      {genreName}
+    </Badge>
+  );
+};
