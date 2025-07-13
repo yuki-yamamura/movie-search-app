@@ -42,3 +42,9 @@ npm run dev
 - **テスト**: Vitest, React Testing Library
 - **リンター**: ESLint, Stylelint
 - **フォーマッター**: Prettier
+
+フォーマット前：
+|name|age|city|
+|---|---|---|
+|John|25|Tokyo|
+|Jane|30|Osaka|

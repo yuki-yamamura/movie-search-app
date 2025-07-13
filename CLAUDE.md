@@ -21,7 +21,6 @@ This is a Next.js 15 movie search application that uses The Movie Database (TMDB
 
 - `npm run test` - Run tests with Vitest
 - `npm run test:watch` - Run tests in watch mode
-- `npm run test:ui` - Run tests with UI interface
 - `npx vitest run path/to/file.test.tsx` - Run a single test file
 
 ### Linting Commands
@@ -67,11 +66,12 @@ src/app/
 
 #### Environment Variables
 
-Required environment variables (create `.env.local` based on README setup):
+Required environment variables (create `.env.local` by copying `.env.template`):
 
-- `NEXT_PUBLIC_TMDB_API_BASE_URL`
-- `NEXT_PUBLIC_TMDB_API_ACCESS_TOKEN`
-- `NEXT_PUBLIC_TMDB_IMAGE_BASE_URL`
+- `TMDB_API_ACCESS_TOKEN` - Your TMDB API access token
+- `TMDB_API_BASE_URL` - TMDB API base URL (https://api.themoviedb.org)
+- `NEXT_PUBLIC_TMDB_IMAGE_BASE_URL` - TMDB image base URL (https://image.tmdb.org/t/p)
+- `NEXT_PUBLIC_APP_URL` - App URL for production (http://localhost:3000 for dev)
 
 ### Testing Setup
 
