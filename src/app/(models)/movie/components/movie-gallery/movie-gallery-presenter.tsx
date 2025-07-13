@@ -16,14 +16,14 @@ type Props = {
 
 export const MovieGalleryPresenter = ({ initialData }: Props) => {
   const [{ search, releaseYear }] = useQueryStates(movieSearchParamsSchema);
-  const { movies, isLoading, isValidating, hasNextPage, totalMovies, loadNextPage, error } =
+  const { movies, isLoading, isLoadingMore, hasNextPage, totalMovies, loadNextPage, error } =
     useInfiniteMovies({
       search,
       releaseYear,
       initialData: initialData && [initialData],
     });
 
-  if (isLoading || isValidating) {
+  if (isLoading) {
     return <LoadingSpinner />;
   }
 
@@ -34,13 +34,15 @@ export const MovieGalleryPresenter = ({ initialData }: Props) => {
   return (
     <div>
       <MovieList movies={movies} />
-      <LoadMoreButton
-        onLoadMore={loadNextPage}
-        isLoading={isValidating}
-        hasMorePages={hasNextPage}
-        totalMovies={totalMovies}
-        currentCount={movies.length}
-      />
+      {!isLoading && (
+        <LoadMoreButton
+          onLoadMore={loadNextPage}
+          isLoading={isLoadingMore}
+          hasMorePages={hasNextPage}
+          totalMovies={totalMovies}
+          currentCount={movies.length}
+        />
+      )}
     </div>
   );
 };
