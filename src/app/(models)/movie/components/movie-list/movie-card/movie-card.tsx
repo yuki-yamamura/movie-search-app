@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { GenreBadge } from '@/app/(models)/movie/components/genre-badge';
 import { GenreEnumOptions } from '@/app/(models)/movie/constants';
 import { getImageUrl } from '@/app/(models)/movie/utils/image';
@@ -25,14 +23,8 @@ export const MovieCard = ({
   return (
     <article className={styles.base}>
       <div className={styles.imageWrapper}>
-        {poster_path ? (
-          <Image
-            src={imageUrl}
-            alt={title ?? 'ポスター画像'}
-            fill
-            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-            className={styles.image}
-          />
+        {poster_path && imageUrl ? (
+          <img src={imageUrl} alt={title ?? 'ポスター画像'} className={styles.image} />
         ) : (
           <div className={styles.placeholder}>
             <span>No Image</span>

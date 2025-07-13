@@ -11,7 +11,5 @@ export const getImageUrl = ({
     throw new Error('TMDB_IMAGE_BASE_URL environment variable is not set');
   }
 
-  return imagePath
-    ? path.join(process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL, size, imagePath)
-    : '/placeholder-movie.png';
+  return imagePath && path.join(process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL, size, imagePath);
 };
