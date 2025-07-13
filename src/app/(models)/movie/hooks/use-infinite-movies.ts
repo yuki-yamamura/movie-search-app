@@ -38,6 +38,7 @@ export const useInfiniteMovies = ({
     error,
     size: currentPage,
     setSize,
+    isLoading,
     isValidating,
   } = useSWRInfinite(getKey, fetcher, {
     fallbackData: shouldUseInitialData ? initialData : undefined,
@@ -56,6 +57,7 @@ export const useInfiniteMovies = ({
 
   return {
     movies,
+    isLoading,
     isValidating,
     hasNextPage,
     totalMovies,

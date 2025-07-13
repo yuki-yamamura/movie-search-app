@@ -6,6 +6,7 @@ import { LoadMoreButton } from '@/app/(models)/movie/components/load-more-button
 import { MovieList } from '@/app/(models)/movie/components/movie-list';
 import { useInfiniteMovies } from '@/app/(models)/movie/hooks/use-infinite-movies';
 import { movieSearchParamsSchema } from '@/app/(models)/movie/schemas/movie-search-params';
+import { LoadingSpinner } from '@/components/loading-spinner';
 
 import type { DiscoverMovieResponse, SearchMovieResponse } from '@/app/(models)/movie/types';
 
@@ -15,13 +16,16 @@ type Props = {
 
 export const MovieGalleryPresenter = ({ initialData }: Props) => {
   const [{ search, releaseYear }] = useQueryStates(movieSearchParamsSchema);
-  const { movies, isValidating, hasNextPage, totalMovies, loadNextPage, error } = useInfiniteMovies(
-    {
+  const { movies, isLoading, isValidating, hasNextPage, totalMovies, loadNextPage, error } =
+    useInfiniteMovies({
       search,
       releaseYear,
       initialData: initialData && [initialData],
-    },
-  );
+    });
+
+  if (isLoading || isValidating) {
+    return <LoadingSpinner />;
+  }
 
   if (error) {
     return <div>映画の読み込みに失敗しました。</div>;
