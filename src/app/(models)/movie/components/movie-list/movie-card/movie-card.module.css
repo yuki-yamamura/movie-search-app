@@ -58,6 +58,13 @@
   color: var(--text-secondary);
 }
 
+.genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: var(--spacing-sm);
+}
+
 .overview {
   display: -webkit-box;
   overflow: hidden;
