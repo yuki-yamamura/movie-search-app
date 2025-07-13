@@ -12,7 +12,7 @@ export const searchMovies = async ({ search, releaseYear, page }: MovieSearchPar
   const queryString = searchParams.toString();
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
   const url = queryString
-    ? `${baseUrl}${pathMap['/api/movies'].get()}?${queryString}`
+    ? `${baseUrl}${pathMap['/api/movies'].get()}${queryString}`
     : `${baseUrl}${pathMap['/api/movies'].get()}`;
 
   const response = await fetch(url);
