@@ -7,9 +7,17 @@ import styles from './badge.module.css';
 
 const badgeVariants = cva(styles.base, {
   variants: {
-    variant: {
-      primary: styles.primary,
-      secondary: styles.secondary,
+    color: {
+      red: styles.red,
+      orange: styles.orange,
+      cyan: styles.cyan,
+      green: styles.green,
+      gray: styles.gray,
+      purple: styles.purple,
+      blue: styles.blue,
+      dark: styles.dark,
+      violet: styles.violet,
+      pink: styles.pink,
     },
     size: {
       small: styles.small,
@@ -17,18 +25,18 @@ const badgeVariants = cva(styles.base, {
     },
   },
   defaultVariants: {
-    variant: 'primary',
+    color: 'blue',
     size: 'medium',
   },
 });
 
-type Props = ComponentPropsWithoutRef<'span'> &
+type Props = Omit<ComponentPropsWithoutRef<'span'>, 'className'> &
   VariantProps<typeof badgeVariants> & {
     children: React.ReactNode;
   };
 
-export const Badge = ({ variant, size, className, children, ...props }: Props) => (
-  <span className={badgeVariants({ variant, size, className })} {...props}>
+export const Badge = ({ color, size, children, ...props }: Props) => (
+  <span className={badgeVariants({ color, size })} {...props}>
     {children}
   </span>
 );

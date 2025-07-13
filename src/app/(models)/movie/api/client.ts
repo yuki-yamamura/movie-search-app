@@ -10,7 +10,7 @@ export const searchMovies = async ({ search, releaseYear, page }: MovieSearchPar
   const searchParams = serialize({ search, releaseYear, page });
 
   const queryString = searchParams.toString();
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
   const url = queryString
     ? `${baseUrl}${pathMap['/api/movies'].get()}${queryString}`
     : `${baseUrl}${pathMap['/api/movies'].get()}`;
