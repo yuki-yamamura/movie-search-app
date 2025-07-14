@@ -42,3 +42,7 @@ npm run dev
 - **テスト**: Vitest, React Testing Library
 - **リンター**: ESLint, Stylelint
 - **フォーマッター**: Prettier
+
+## 備考
+
+現在は山村の個人アカウントで発行したAPIキーでデプロイしている。
